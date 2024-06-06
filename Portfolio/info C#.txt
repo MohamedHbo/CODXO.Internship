@@ -1,0 +1,398 @@
+
+-----------------------------iti--------------------------
+C# --> compiler --> Cil   --> .net (clr) --> native language
+
+
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Data.SqlClient;
+using System.ComponentModel.DataAnnotations;
+using System.Xml;
+using System.IO;
+
+
+1- Console.Title = "HBO";   -----> Console بتسمي ال 
+
+2- int.Parse(console.readline());  ------>   للتحول الرقمي
+
+3-convert.Toint32(console.readline());         string[] mn = Console.ReadLine().Split();   n = char.ToUpper(n);  char n=Convert.ToChar(Console.ReadLine());
+
+4-foreach(type(int or string) n in namevariable)
+
+5-struct--> Immutable __Stack Allocation  التراكيب والبنيه***يتم استخدامها لهياكل البيانات الصغيرة حيث يكون الأداء أمرًا بالغ الأهمية ويجب أن تكون المثيلات خفيفة الوزن، مثل النقطة أو المستطيل 
+
+type Conversions(Implicit vs Explicit)
+
+------------------------------------
+Enum -->Improves Code Readability___Prevents Magic Numbers  التعداد***يُستخدم بشكل شائع لتحديد مجموعة من الثوابت ذات الصلة، مثل أيام الأسبوع
+
+
+6-array  ---> 4,3Dتستخدم لبرمجه الالعاب <----->والتطبيقات ال 
+
+7-list is dynamic ---> اضافه عناصر <-----> حذف العناصر  List<int> mylist = new List<int>();   mylist.Add(5);
+
+8-Method --> Function  ... Procedure==(void)
+
+9-انواع تمرير ------  تمرير بالقيم  +++ تمرير بالمرجع ++++ تمرير بالاخراج
+التمرير بالقيمة (Pass by Value) :: يتم إرسال نسخة من القيمة الأصلية.	        لا يؤثر على القيمة الأصلية.	  لا تنعكس على القيمة الأصلية.	 غير مناسب للتعديلات الجانبية (Side Effects).	
+التمرير بالمرجع (Pass by Reference)	:: يتم إرسال المرجع (عنوان) للمتغير الأصلي.	    يؤثر على القيمة الأصلية (يتم التلاعب بالبيانات الأصلية).        	ref يستخدم مع المعامل في التعريف وفي الاستدعاء.	  تنعكس على القيمة الأصلية.	 مناسب للتعديلات الجانبية (Side Effects).	
+التمرير بالإخراج (Pass by Output) ::يتم إرسال نسخة من القيمة الأصلية.     يؤثر على القيمة الأصلية.   out يستخدم مع المعامل في التعريف وفي الاستدعاء.    تنعكس على القيمة الأصلية (يجب تهيئة المتغير داخل الدالة).   مناسب للتعديلات الجانبية (Side Effects).
+
+
+10-معالجه الاستثناءات :: try and catch --> بتحل المشاكل  
+try   {الاوامر المراد التحقق من صحتها }
+catch {الاوامر المراد تنفذيها عند حدوث الخطأ}.
+
+
+11- string input = Console.ReadLine();
+        string[] parts = input.Split('+', '-', '*', '/');                           لو عايز اخد char and numbers in the same line 
+
+        int A = int.Parse(parts[0]);
+        int B = int.Parse(parts[1]);
+        char operation = input[parts[0].Length];
+
+12--int n = int.Parse(Console.ReadLine());   لو عايز اخد القيم في سطر واحد في لوب 
+
+        int[] x = new int[n];
+
+        string inputLine = Console.ReadLine();
+        string[] inputNumbers = inputLine.Split(' ');
+
+        int e = 0, o = 0, p = 0, ne = 0;
+
+        for (int i = 0; i < n; i++)
+        {
+            x[i] = int.Parse(inputNumbers[i]);
+
+            
+        }
+
+
+Plan-driven:: processes are processes where all of the process activities are planned in advance and progress is measured against this plan. 
+In agile processes::, planning is incremental and it is easier to change the process to reflect changing customer requirements. 
+
+
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++C#(OOP)++++++++++++++++++++++++++
+
+Object-Oriented-Programming 
+
+🔹Interfaces
+it is contract [without any implementation]
+🔸🔸Interfaces is a contract,The first party is the code that contains the terms of contract,The second use the terms of contract”must follow it”
+Example : mobile phone and Computer they both are devices ,both have Turn on ,Turn off and Restart so i must say there is a relation between them
+We can make abstract class ,But i prefer interface
+🔸🔸Difference Between class and interface
+-Classes doesn’t have multiple inheritance, but interface can.
+-Classes that inherit from the interface must implement the properties and methods of it.
+-If there is a class that doesn’t have this Method we can make another interface and give it to the needed classes only.
+🔸🔸Implicit & Explicit
+
+🔹ArrayList
+🔸🔸More flexible than the basic array
+🔸🔸It is dynamic as vector in C++ “doesn’t need resizing”
+🔸🔸Arrays strongly typed ,but ArrayList can carry multiple datatypes “object” because it is the parent class
+🔸🔸Boxing & Unboxing
+🔸🔸Some methods
+Add, AddRange, Insert, Remove, RemoveAt, RemoveRange,IndexOf,……
+
+🔹Generic List
+🔸🔸it is similar to ArrayList but it doesn’t need Boxing and Unboxing because it must contains values of the same datatype
+Doesn’t need resizing
+
+🔹Dictionary
+🔸🔸It is similar to map in C++
+🔸🔸contains keys and values
+The Key is index of the value so it must be unique
+
+🔹Stack
+🔸🔸LIFO & FILO
+🔸🔸Undo / Redo , Back / Forward ,Prefix and Postfix all of this based on stack
+🔸🔸can’t access the values by index
+🔸🔸Push, Pop, Peek
+
+🔹Queue
+🔸🔸FIFO
+🔸🔸Printer jobs based on queue
+🔸🔸can’t access the values by index
+🔸🔸 Dequeue , Enqueue
+--------------------------------------
+Access Modifiers,Static
+(Puplic,Private,Protected)
+------------------------------------
+Constructors(المشيدات)
+عندما لا يكون في مشيد ينشئ مشيد افتراضي 
+
+المشيد بناخد اسم الكلاس 
+
+Constructor هو نوع من الوظائف في البرمجة الشيئية (Object-Oriented Programming)، ويتم استخدامه لبناء (تهيئة) كائن من الكلاس. عند إنشاء كائن من الكلاس، يتم استدعاء الكونستركتور لتهيئة الكائن وتحديد حالته الابتدائية.
+
+<<استخدامه>>
+تهيئة الكائنات (Initialization): يُستخدم الكونستركتور لتهيئة الكائنات عند إنشائها. يمكن استخدامه لتعيين قيم ابتدائية للمتغيرات داخل الكلاس أو تنفيذ إجراءات هامة لبدء التشغيل.
+
+ضمان تنفيذ الشيفرة المطلوبة: عندما يتم إنشاء كائن من الكلاس، يتم ضمان تنفيذ الشيفرة الموجودة في الكونستركتور. هذا يضمن أن الكائن سيكون في حالة صحيحة ومهيأ بشكل صحيح للاستخدام الفعّال.
+
+إعداد قيم ابتدائية: يمكن استخدام الكونستركتور لتعيين قيم ابتدائية للمتغيرات داخل الكلاس، مما يجعلها تأخذ قيمًا معينة فور إنشاء الكائن.
+
+تمييز الكونستركتورات: يمكن وجود عدة كونستركتورات في نفس الكلاس، وذلك بفضل مفهوم الـ"Overloading". يمكن تحميل الكونستركتورات بوظائف مختلفة استنادًا إلى عدد ونوع المعلمات التي يتم تمريرها.
+
+التحكم في الوصول والأذونات: يمكن استخدام الكونستركتور بالإضافة إلى الآليات (Access Modifiers) للتحكم في الوصول إلى بعض المتغيرات أو الدوال داخل الكلاس.
+
+وراثة الكونستركتورات: عند استخدام الوراثة، يمكن أن تقوم الكونستركتورات بالكلاسات المشتقة بتنفيذ الكونستركتورات في الكلاس الأم، مما يسمح بتوسيع وتخصيص سلوك الكونستركتور.
+
+
+
+----------------------------------------------------------------------------
+Properties(الخصائص )getter and setter
+getter --->return
+setter --> change value
+---------------------------------------------------------
+(inhetiance)
+يرث من ال class 
+class person{
+}
+class Doctor:person
+{
+}
+
+------------------------------------------------------------------
+Astract Classes(الفئات المجرده),Sealed Classes(الفئات المغلقه)
+abstract classe ---> لا يمكن استنساخ اي كائنات منها 
+
+it is a contract [can have it's own implementation]
+
+
+الفائده:التنظيم والترتيب وتحديد الهيكل و الإلزام والتوسعية
+
+abstract class person{
+}
+للوصول ليها لازم نعمل كلاس تاني ونورث منها 
+
+sealed class book{
+
+}
+مستحيل نرث منه 
+
+----------------------------------------------------------------------------------
+virtual Method(الوظائف الوهميه)
+
+virtual , override+base 
+-------------------------------------------
+الفرق بين override,new
+new--> تقوم باخفاء الوظيفه الاصليه علي مستوي الكلاس 
+بيظهر الي في الكلاس الاصلي حتي لو عملت جديد 
+
+override --> بياخد الجديد ويغير في الكلاس القديم 
+
+---------------------------------------------------------------------------------
+overloadind (تعداد  التعاريف),Polymorphisme(تعدد الاشكال)
+
+overloading:عندما نرغب في توفير نفس الوظيفة أو السلوك لكن مع إمكانية استخدام معلومات مختلفة. يتيح ذلك للمطورين استخدام واجهة مألوفة دون الحاجة إلى تغيير الاسم في حالة وجود معلومات مختلفة.
+
+polymorphism:
+تعددية الوظائف (Function Overloading): يمكنك تعريف عدة دوال بنفس الاسم ولكن مع معلومات دخل مختلفة. على سبيل المثال، إذا كنت ترغب في تنفيذ إجراءات مختلفة اعتمادًا على نوع البيانات (مثل جمع أعداد صحيحة وأعداد عشرية).
+
+تعددية الكائن (Object Polymorphism): تتمثل هنا في القدرة على استخدام واجهة عامة للكائنات وتنفيذ سلوك مختلف باستخدام أنواع مختلفة من الكائنات. يمكن تحقيق ذلك عن طريق الوراثة واستخدام وظيفة مشتركة في الواجهة العامة.
+
+---------------------------------------------------------------------
+Interface(الواجهات)
+C++ --> ممكن الكلاس يرث من اكتر من فئه 
+C# --> لا يمكن ان يرث الامره واحده واذا كنا نريد ان نرث من اكتر فنستخدم ال Interface
+
+
+        interface rectangle
+        { 
+          int width { get; set; }
+            int height { get; set; }
+
+            float Area();
+        }
+واورث منه براحتي 
+-----------------------------------------------------------
+Delegates(المفوضات)and Multicast
+تعمل علي تمرير الوظايف علي شكل برامتر وهنا الغايه منه الاختيار السليم للوظيفه المناسبه 
+
+-----------------------------------------------------------
+Event(الاحداث)
+-------------------------------------------------------------------
+Lambda Expression (العبارات لامدا)  ظهرت في نسخه الثالثه نت سي شارب
+absancs.Aevent + = () => Console.writelie("warning");
+
+-------------------------------------------------------------------summery---------------------------------------
+(APIE) Abstraction - polymorphism - Inheritance - Encapsulation
+
+Inheritance indicates the code reusability. Encapsulation and abstraction are meant to hide/group data into one element. Polymorphism is to indicate different tasks performed by a single entity.
+
+15. What is encapsulation in OOP?
+It is a way of combining various data members and member functions that operate on those data members into a single unit.
+
+What is an abstraction ? 
+Hiding the implementation and showing only the features
+
+How to access the private member function of a class?
+Using address of member function
+
+Which feature can be implemented using encapsulation:Abstraction
+
+While using encapsulation, which among the following is possible?
+Data member’s data type can be changed without changing any other code
+
++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++
+1. What happens when you divide an int variable by 0?
+-Unhandled Exception
+
+2. What happens when you divide a double variable by 0?
+-Infinity
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++Sql++++++++++++++++++++++++++++++++++++
+using System.Data.SqlClient;>>Sql
+using System.Data.OleDb;>>Excel
+using System.Data.Odbc;>>MySql
+
+------------connection with C#---------------------------------
+SqlConnection cn=new SqlConnection("String Connection");
+
+SqlConnection cn = new SqlConnection(@"Data Source=.\SQLEXPRESS; Initial Catalog=Name_DataBase; Integrated Security=true;");
+SqlConnection cn = new SqlConnection(@"Server=.\SQLEXPRESS; DataBase=first; Integrated Security=true;");
+SqlCommand cmd;
+SqlDataReader reader;
+
+cmd = new SqlCommand("INSERT INTO books(ID,Title,Author,Publish_date,Page_number) VALUES('" + txtid.Text + "','" + txttitle.Text + "','" + txtauthor.Text + "','" + datepublish.Value + "' , " + txtnum.Text + ")", cn);
+
+what is diifremce between SqlAdapter , Sqlcommand 
+sqlAdapter --->  بتشتغل لما تكون السيرفر منفصل Data set ds; 
+SqlCommand --> بتشتغل لما تكون السيرفر متصل وبتكون بشكل مباشر 
+
+++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++
+
+.net appear 2002 --  before .net framework -->visual c++ , visual Basic
+.net core ---> cross platform ,open source ,compinent Based
+il(intermediate language)   clr(comman language runtime)  bsl(Base class library) 
+
+++++++++++++++++++++++++++++++++++++++++
+(EF)(Foldet Model)
+
+install  Microsoft.AspNetCore.Identity.EntityFrameworkCore
+install  Microsoft.EntityFrameworkCore.SqlServer
+Install-package Microsoft.EntityFrameworkCore.Tools
+
+primary key in datanotation -->[key] [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+ [MaxLength(50)]
+ [MinLength(3)]
+
+ [Range(6,20)]
+
+forigen key --> public nameclass any name {get; set;}
+
+
+<folder contxt to confiufre amd creating>
+<create Table>
+  public DbSet<Student> Students { get; set; }
+
+ protected override void OnConfiguring(DbContextOptionsBuilder dbContextOptionsBuilder)
+        { 
+           base.OnConfiguring(dbContextOptionsBuilder);
+            var builder = new ConfigurationBinder().AddJsonFile("appsetting.json",optional:true,reloadonChange:true);
+            IConfigurationRoot config =builder.Build();
+            var conString = config.GetConnectionString("DefaultConnection");
+             dbContextOptionsBuilder.UseSqlServer(constring);
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        { 
+        base.OnModelCreating(builder);
+        }
+
+connection in appessettingjson 
+ "ConnectionStrings": {
+    "Myconnectio": "Data source=LAPTOP-H65DAKUS\\SQLEXPRESS";Initial Catalog=Shooldb;  integrated security=True"
+  },
+
+<EF Migrations & Dependency injection>From Nuget Package in console
+add-migration 'anyname'
+update-database
+-------------------------------
+(EF)(Foldet Controller) interact user with 'mvc'
+
+1-add controller new 
+2-write all action (ActionResult: return all data type and view and json)
+        [HttpGet]
+        public AcceptedResult Index()
+        {
+
+            return View();
+        }
+         [HttpPost] for  user to create in database
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Organize your code in a professional way using "factory" design pattern
+ 
+add folser 'Repository' contain on interface and calss to implemtion and connection context database , you should private and readonly and create constructor
+--------------------------------------------------------
+<LINQ>>
+use command sql to create update delete  not sqlserver
+ 
+ public List<Student> GetAllStudents()
+        {
+            List<Student> students = ("query linq" from anyname in newmydbcontext.Entity select anyname);
+            return students;
+        }
+
+-----------------
+ public List<Student> GetAllStudents()
+        {
+            List<Student> students = (from stdsobj in _myDbConnection.Students select stdsobj).ToList;
+            return students;
+            _myDbConnection.SaveChanges();
+         }
+-----------------
+Route
+   app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.Run();
+        }
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+(MVC)Model view control
+there are action (filter , selection)
+action Verbs(GET, POST ,PUT , HEAD , OPTION , DELETE , PATH)
+<Request life cycle> 
+request ---> ROUTING ---> Controller Intilization, --->Action Execution ----> Result Execution ---> view Engine ---> Result Execution ---> response
+---------------------------
+error to add migrtaion 
+ public class YourDbContextFactory : IDesignTimeDbContextFactory<AppDpContext>
+        {
+            public AppDpContext CreateDbContext(string[] args)
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<AppDpContext>();
+                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=VacationPlannerDB;Trusted_Connection=True;MultipleActiveResultSets=true");
+
+                return new AppDpContext(optionsBuilder.Options);
+            }
+        }
+
+
+
+protected override void configuration ()
+{
+                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=VacationPlannerDB;Trusted_Connection=True;MultipleActiveResultSets=true");
+
+}
+-----------------------
+ "conn": "data source=LAPTOP-H65DAKUS\\SQLEXPRESS; initial catalog=war; integrated security=true ; Trusted_Connection=True;Encrypt=False; MultipleActiveResultSets= true"
