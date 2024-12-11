@@ -1,0 +1,14 @@
+body {
+    font-family: Arial, sans-serif;
+    direction: <?php echo $_SESSION['lang'] === 'ar' ? 'rtl' : 'ltr'; ?>;
+    text-align: <?php echo $_SESSION['lang'] === 'ar' ? 'right' : 'left'; ?>;
+}
+nav {
+    background-color: #f8f9fa;
+    padding: 10px;
+}
+nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #007bff;
+}
