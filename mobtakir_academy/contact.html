@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اتصل بنا - أكاديمية المبتكر</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- شريط التنقل الحديث -->
+    <nav class="glass-navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="ر" width="40" height="40">
+                <span>المبتكر</span>
+            </a>
+            
+            <div class="nav-container">
+                <ul class="nav-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                    <li><a href="about.html"><i class="fas fa-info-circle"></i> من نحن</a></li>
+                    <li><a href="contact.html" class="active"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
+                </ul>
+            </div>
+            
+            <button class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- صفحة العنوان الحديثة -->
+    <header class="page-header">
+        <div class="container">
+            <div class="header-content">
+                <h1 data-aos="fade-up">اتصل بنا</h1>
+                <p data-aos="fade-up" data-aos-delay="100">نحن هنا للإجابة على جميع استفساراتك</p>
+                <div class="breadcrumb" data-aos="fade-up" data-aos-delay="200">
+                    <a href="index.html">الرئيسية</a>
+                    <span>/</span>
+                    <span class="current">اتصل بنا</span>
+                </div>
+            </div>
+            <div class="header-image" data-aos="fade-left">
+            </div>
+        </div>
+    </header>
+
+    <!-- قسم معلومات الاتصال -->
+    <section class="contact-info-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge" style="margin-top: 100px;">تواصل معنا</span>
+                <h2 class="section-title">ابقى على <span>اتصال</span></h2>
+            </div>
+            
+            <div class="contact-methods">
+                <div class="contact-card" data-aos="fade-up">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>عنواننا</h3>
+                    <p>123 شارع التحرير، القاهرة، مصر</p>
+                </div>
+                
+                <div class="contact-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h3>هاتفنا</h3>
+                    <p>+20 123 456 789</p>
+                    <p>+20 987 654 321</p>
+                </div>
+                
+                <div class="contact-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>بريدنا</h3>
+                    <p>info@almobtaker.com</p>
+                    <p>support@almobtaker.com</p>
+                </div>
+                
+                <div class="contact-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>ساعات العمل</h3>
+                    <p>الأحد - الخميس: 9 ص - 5 م</p>
+                    <p>الجمعة - السبت: إجازة</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم نموذج الاتصال الحديث -->
+    <section class="contact-form-section">
+        <div class="container">
+            <div class="form-container" data-aos="fade-up">
+                <div class="form-header">
+                    <h3>أرسل لنا رسالة</h3>
+                    <p>سنرد عليك في غضون 24 ساعة</p>
+                </div>
+                
+                <form id="contactForm" class="modern-form">
+                    <div class="form-group">
+                        <label for="name">الاسم الكامل *</label>
+                        <input type="text" id="name" name="name" required>
+                        <i class="fas fa-user"></i>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">البريد الإلكتروني *</label>
+                        <input type="email" id="email" name="email" required>
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">رقم الهاتف</label>
+                        <input type="tel" id="phone" name="phone">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">الموضوع *</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">اختر موضوع الرسالة</option>
+                            <option value="inquiry">استفسار عام</option>
+                            <option value="registration">تسجيل في دورة</option>
+                            <option value="support">دعم فني</option>
+                            <option value="collaboration">تعاون أو شراكة</option>
+                            <option value="other">أخرى</option>
+                        </select>
+                        <i class="fas fa-tag"></i>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="message">الرسالة *</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                        <i class="fas fa-comment-dots"></i>
+                    </div>
+                    
+                    <div class="form-submit">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-paper-plane"></i> إرسال الرسالة
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="map-container" data-aos="fade-up" data-aos-delay="100">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.66325428613!2d31.233485515114486!3d30.04441758189193!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458409a8f5e1d9f%3A0x3d9df5a1a1a2a2a2!2sTahrir%20Square%2C%20Cairo!5e0!3m2!1sen!2seg!4v1620000000000!5m2!1sen!2seg" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الأسئلة الشائعة -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">أسئلة</span>
+                <h2 class="section-title">الأسئلة <span>الشائعة</span></h2>
+            </div>
+            
+            <div class="faq-accordion">
+                <div class="accordion-item" data-aos="fade-up">
+                    <button class="accordion-header">
+                        <span>كيف يمكنني التسجيل في الدورات؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <p>يمكنك التسجيل في أي دورة عن طريق زيارة صفحة الدورات واختيار الدورة المناسبة ثم الضغط على زر "سجل الآن" وملء استمارة التسجيل.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item" data-aos="fade-up" data-aos-delay="100">
+                    <button class="accordion-header">
+                        <span>ما هي طرق الدفع المتاحة؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <p>نحن نقبل الدفع عبر البطاقات الائتمانية، التحويل البنكي، وباي بال. كما نقدم خيارات دفع متعددة لتسهيل العملية على عملائنا.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item" data-aos="fade-up" data-aos-delay="200">
+                    <button class="accordion-header">
+                        <span>هل تقدمون شهادات معتمدة؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <p>نعم، جميع دوراتنا تنتهي بشهادة إتمام معتمدة من الأكاديمية، وبعض الدورات تقدم شهادات معتمدة دوليًا حسب طبيعة الدورة.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item" data-aos="fade-up" data-aos-delay="300">
+                    <button class="accordion-header">
+                        <span>ما هي مدة الرد على استفساراتي؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <p>فريق الدعم لدينا يعمل على مدار أيام العمل من الأحد إلى الخميس، وسيتم الرد على استفساراتك في غضون 24 ساعة عمل كحد أقصى.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- الفوتر المعدّل -->
+    <footer class="modern-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col about-col">
+                    <a href="index.html" class="footer-logo">
+                        <img src="logo.png" alt="شعار أكاديمية المبتكر" width="40" height="40">
+                        <span>المبتكر</span>
+                    </a>
+                    <p>نقدم حلولاً تعليمية وتقنية مبتكرة تلبي احتياجات العصر الرقمي بجودة عالية واحترافية.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col links-col">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="about.html">من نحن</a></li>
+                        <li><a href="courses.html">الدورات</a></li>
+                        <li><a href="portfolio.html">أعمالنا</a></li>
+                        <li><a href="contact.html">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col contact-col">
+                    <h3>تواصل معنا</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 شارع التحرير، القاهرة، مصر</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+20 123 456 789</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>info@almobtaker.com</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col newsletter-col">
+                    <h3>النشرة البريدية</h3>
+                    <p>اشترك ليصلك كل جديد عن دوراتنا وعروضنا</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="بريدك الإلكتروني" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="copyright">
+                    &copy; 2024 أكاديمية المبتكر. جميع الحقوق محفوظة.
+                </div>
+                <div class="footer-links">
+                    <a href="#">سياسة الخصوصية</a>
+                    <a href="#">شروط الاستخدام</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- الأكواد الجافاسكريبت -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/modern-main.js"></script>
+    <script>
+        // تهيئة مكتبات الحركة
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+        
+        // معالجة نموذج الاتصال
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // هنا يمكنك إضافة كود إرسال النموذج
+            alert('تم استلام رسالتك بنجاح، سنتواصل معك قريباً!');
+            this.reset();
+        });
+        
+        // الأكورديون
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const isActive = item.classList.contains('active');
+                
+                // إغلاق جميع العناصر أولاً
+                document.querySelectorAll('.accordion-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                
+                // فتح العنصر الحالي إذا لم يكن نشطًا
+                if(!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
