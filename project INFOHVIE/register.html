@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - InfoHive</title>
+    <link rel="stylesheet" href="css/style.css">
+        <style>
+        .register-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+        
+        .register-card {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid rgba(255, 204, 0, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .register-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #FFCC00, #FFD700);
+        }
+        
+        .register-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .register-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #FFCC00, #FFD700);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #000;
+            margin: 0 auto 1rem;
+        }
+        
+        .register-title {
+            color: #FFCC00;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .register-subtitle {
+            color: #e0e0e0;
+            font-size: 1rem;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #FFCC00;
+            font-weight: 500;
+        }
+        
+        .form-input, .form-select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255, 204, 0, 0.3);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #FFCC00;
+            background: rgba(0, 0, 0, 0.7);
+            box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.1);
+        }
+        
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .form-select option {
+            background: #000;
+            color: #fff;
+        }
+        
+        .password-strength {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .strength-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            margin: 0.5rem 0;
+            overflow: hidden;
+        }
+        
+        .strength-fill {
+            height: 100%;
+            width: 0%;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .strength-weak .strength-fill {
+            width: 33%;
+            background: #f44336;
+        }
+        
+        .strength-medium .strength-fill {
+            width: 66%;
+            background: #ff9800;
+        }
+        
+        .strength-strong .strength-fill {
+            width: 100%;
+            background: #4CAF50;
+        }
+        
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            color: #e0e0e0;
+        }
+        
+        .terms-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #FFCC00;
+            margin-top: 2px;
+        }
+        
+        .terms-checkbox a {
+            color: #FFCC00;
+            text-decoration: none;
+        }
+        
+        .terms-checkbox a:hover {
+            color: #FFD700;
+        }
+        
+        .register-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #FFCC00, #FFD700);
+            color: #000000;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+        }
+        
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 204, 0, 0.4);
+        }
+        
+        .register-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            position: relative;
+            color: #a0a0a0;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 1;
+        }
+        
+        .divider span {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 0 1rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .social-login {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: transparent;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+        
+        .social-btn:hover {
+            border-color: rgba(255, 204, 0, 0.5);
+            background: rgba(255, 204, 0, 0.1);
+        }
+        
+        .login-link {
+            text-align: center;
+            color: #e0e0e0;
+        }
+        
+        .login-link a {
+            color: #FFCC00;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .login-link a:hover {
+            color: #FFD700;
+        }
+        
+        .back-home {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            color: #FFCC00;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .back-home:hover {
+            color: #FFD700;
+            transform: translateX(-5px);
+        }
+        
+        .error-message {
+            color: #f44336;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .register-card {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .back-home {
+                top: 1rem;
+                left: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-home">← Back to Home</a>
+    
+    <div class="register-container">
+        <div class="register-card">
+            <div class="register-header">
+                <div class="register-logo"><img src="images/logo.png" style="width: 80px;"></div>
+                <h1 class="register-title">Join InfoHive</h1>
+                <p class="register-subtitle">Create your account and start your IT readiness assessment journey</p>
+            </div>
+            
+            <form id="register-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input type="text" id="firstName" name="firstName" class="form-input" placeholder="Enter your first name" required>
+                        <div class="error-message" id="firstName-error"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" class="form-input" placeholder="Enter your last name" required>
+                        <div class="error-message" id="lastName-error"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email address" required>
+                    <div class="error-message" id="email-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" name="password" class="form-input" placeholder="Create a strong password" required>
+                    <div class="password-strength">
+                        <div class="strength-bar">
+                            <div class="strength-fill"></div>
+                        </div>
+                        <span class="strength-text">Password strength: <span id="strength-level">Weak</span></span>
+                    </div>
+                    <div class="error-message" id="password-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" placeholder="Confirm your password" required>
+                    <div class="error-message" id="confirmPassword-error"></div>
+                </div>
+                
+                <div class="terms-checkbox">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">
+                        I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. 
+                        I understand that InfoHive will use my information to provide personalized assessment experiences.
+                    </label>
+                </div>
+                
+                <button type="submit" class="register-btn" id="register-submit">
+                    Create Account →
+                </button>
+            </form>
+            
+            <div class="login-link">
+                Already have an account? <a href="login.html">Sign in here</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Enhanced Registration Script
+        document.addEventListener('DOMContentLoaded', function() {
+            // Password strength checker
+            document.getElementById('password').addEventListener('input', function() {
+                const password = this.value;
+                const strengthBar = document.querySelector('.password-strength');
+                const strengthFill = document.querySelector('.strength-fill');
+                const strengthLevel = document.getElementById('strength-level');
+                
+                let strength = 0;
+                
+                // Check password criteria
+                if (password.length >= 8) strength++;
+                if (/[a-z]/.test(password)) strength++;
+                if (/[A-Z]/.test(password)) strength++;
+                if (/[0-9]/.test(password)) strength++;
+                if (/[^A-Za-z0-9]/.test(password)) strength++;
+                
+                // Update strength display
+                strengthBar.className = 'password-strength';
+                
+                if (strength < 3) {
+                    strengthBar.classList.add('strength-weak');
+                    strengthLevel.textContent = 'Weak';
+                } else if (strength < 5) {
+                    strengthBar.classList.add('strength-medium');
+                    strengthLevel.textContent = 'Medium';
+                } else {
+                    strengthBar.classList.add('strength-strong');
+                    strengthLevel.textContent = 'Strong';
+                }
+            });
+            
+            // Form validation and submission
+            document.getElementById('register-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Clear previous errors
+                document.querySelectorAll('.error-message').forEach(el => {
+                    el.style.display = 'none';
+                    el.textContent = '';
+                });
+                
+                // Get form values
+                const firstName = document.getElementById('firstName').value.trim();
+                const lastName = document.getElementById('lastName').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                const termsChecked = document.getElementById('terms').checked;
+                
+                // Validation
+                let isValid = true;
+                
+                if (!firstName) {
+                    showError('firstName-error', 'First name is required');
+                    isValid = false;
+                }
+                
+                if (!lastName) {
+                    showError('lastName-error', 'Last name is required');
+                    isValid = false;
+                }
+                
+                if (!email) {
+                    showError('email-error', 'Email is required');
+                    isValid = false;
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    showError('email-error', 'Please enter a valid email address');
+                    isValid = false;
+                }
+                
+                if (!password) {
+                    showError('password-error', 'Password is required');
+                    isValid = false;
+                } else if (password.length < 8) {
+                    showError('password-error', 'Password must be at least 8 characters long');
+                    isValid = false;
+                }
+                
+                if (password !== confirmPassword) {
+                    showError('confirmPassword-error', 'Passwords do not match');
+                    isValid = false;
+                }
+                
+                if (!termsChecked) {
+                    alert('Please accept the Terms of Service and Privacy Policy');
+                    isValid = false;
+                }
+                
+                if (isValid) {
+                    // Create user object
+                    const user = {
+                        firstName,
+                        lastName,
+                        email,
+                        password, // Note: In production, you should NEVER store plain text passwords
+                        createdAt: new Date().toISOString()
+                    };
+                    
+                    // Check if user already exists
+                    const existingUsers = JSON.parse(localStorage.getItem('infohive_users')) || [];
+                    const userExists = existingUsers.some(u => u.email === email);
+                    
+                    if (userExists) {
+                        showError('email-error', 'An account with this email already exists');
+                        return;
+                    }
+                    
+                    // Save user to localStorage
+                    existingUsers.push(user);
+                    localStorage.setItem('infohive_users', JSON.stringify(existingUsers));
+                    
+                    // Show success message
+                    alert('Registration successful! You will now be redirected to login.');
+                    
+                    // Redirect to login page
+                    window.location.href = 'login.html';
+                }
+            });
+            
+            function showError(elementId, message) {
+                const errorElement = document.getElementById(elementId);
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

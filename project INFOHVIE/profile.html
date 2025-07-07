@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | InfoHive</title>
+    <meta name="description" content="View and manage your InfoHive profile, assessment results, and learning progress.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <style>
+        /* Additional styles specific to profile page */
+        .profile-header {
+            background: linear-gradient(135deg, #FFD700 0%, black 100%);
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            border-radius: 0 0 10px 10px;
+        }
+        
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 2rem 0;
+        }
+        
+        .profile-stat {
+            text-align: center;
+        }
+        
+        .profile-stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #FFCC00;
+        }
+        
+        .profile-stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db 0%, #2ecc71 100%);
+            border-radius: 5px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background-color: #FFCC00;
+            color: #2c3e50;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .assessment-history-item {
+            border-left: 4px solid #3498db;
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .edit-profile-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        
+        .edit-profile-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="index.html" class="logo">
+               <img src="images/3.png" style="width: 120px;">
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#features" class="nav-link">Features</a></li>
+                <li><a href="profile.html" class="nav-link active">My Profile</a></li>
+                <li><a href="login.html" class="nav-link">Logout</a></li>
+            </ul>
+            
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Profile Header -->
+    <section class="profile-header">
+        <div class="container text-center position-relative">
+            <button class="edit-profile-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 5px;">
+                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                </svg>
+                Edit Profile
+            </button>
+            
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Avatar" class="profile-avatar">
+            <h1 style="margin: 0.5rem 0 0.2rem;">John Doe</h1>
+            <p style="opacity: 0.8; margin-bottom: 0.5rem;">Computer Science Student</p>
+            <div>
+                <span class="badge">Gold Member</span>
+                <span class="badge">Top 10%</span>
+                <span class="badge">5 Certifications</span>
+            </div>
+            
+            <div class="profile-stats">
+                <div class="profile-stat">
+                    <div class="profile-stat-value">87%</div>
+                    <div class="profile-stat-label">Overall Score</div>
+                </div>
+                <div class="profile-stat">
+                    <div class="profile-stat-value">24</div>
+                    <div class="profile-stat-label">Assessments</div>
+                </div>
+                <div class="profile-stat">
+                    <div class="profile-stat-value">156</div>
+                    <div class="profile-stat-label">Learning Hours</div>
+                </div>
+                <div class="profile-stat">
+                    <div class="profile-stat-value">5</div>
+                    <div class="profile-stat-label">Certificates</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Profile Content -->
+    <section class="section section-light">
+        <div class="container">
+            <div class="grid grid-2">
+                <!-- Left Column -->
+                <div>
+                    <!-- Skills Overview -->
+                    <div class="card mb-3" data-animate>
+                        <h3 class="card-title">🛠️ Skills Overview</h3>
+                        <div style="margin-bottom: 1.5rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.3rem;">
+                                <span>Programming (Python, Java)</span>
+                                <span>92%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 92%;"></div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1.5rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.3rem;">
+                                <span>Networking & Security</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1.5rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.3rem;">
+                                <span>Database Management</span>
+                                <span>78%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 78%;"></div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1.5rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.3rem;">
+                                <span>Cloud Computing</span>
+                                <span>65%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.3rem;">
+                                <span>System Administration</span>
+                                <span>71%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 71%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Achievements -->
+                    <div class="card" data-animate>
+                        <h3 class="card-title">🏆 Recent Achievements</h3>
+                        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                            <div style="background-color: #FFCC00; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#2c3e50" viewBox="0 0 16 16">
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div style="font-weight: bold;">Python Expert Badge</div>
+                                <div style="font-size: 0.9rem; opacity: 0.8;">Scored in top 5% on Python Assessment</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                            <div style="background-color: #FFCC00; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#2c3e50" viewBox="0 0 16 16">
+                                    <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div style="font-weight: bold;">100 Hours Milestone</div>
+                                <div style="font-size: 0.9rem; opacity: 0.8;">Completed 100+ learning hours</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <div style="background-color: #FFCC00; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#2c3e50" viewBox="0 0 16 16">
+                                    <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zm-5.146-5.146-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div style="font-weight: bold;">Weekly Streak</div>
+                                <div style="font-size: 0.9rem; opacity: 0.8;">5 weeks of continuous learning</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column -->
+                <div>
+                    <!-- Assessment History -->
+                    <div class="card mb-3" data-animate>
+                        <h3 class="card-title">📝 Assessment History</h3>
+                        
+                        <div class="assessment-history-item">
+                            <div style="display: flex; justify-content: space-between;">
+                                <h4 style="margin: 0;">Advanced Python Programming</h4>
+                                <span style="color: #2ecc71; font-weight: bold;">94%</span>
+                            </div>
+                            <div style="font-size: 0.9rem; opacity: 0.8; margin: 0.3rem 0;">Completed: June 15, 2025</div>
+                            <p style="margin: 0.5rem 0;">Scored in the top 5% of all test takers. Excellent understanding of OOP concepts and algorithms.</p>
+                        </div>
+                        
+                        <div class="assessment-history-item">
+                            <div style="display: flex; justify-content: space-between;">
+                                <h4 style="margin: 0;">Network Security Fundamentals</h4>
+                                <span style="color: #2ecc71; font-weight: bold;">88%</span>
+                            </div>
+                            <div style="font-size: 0.9rem; opacity: 0.8; margin: 0.3rem 0;">Completed: June 5, 2025</div>
+                            <p style="margin: 0.5rem 0;">Strong knowledge of firewalls and encryption. Could improve on VPN configurations.</p>
+                        </div>
+                        
+                        <div class="assessment-history-item">
+                            <div style="display: flex; justify-content: space-between;">
+                                <h4 style="margin: 0;">Database Design & SQL</h4>
+                                <span style="color: #f39c12; font-weight: bold;">76%</span>
+                            </div>
+                            <div style="font-size: 0.9rem; opacity: 0.8; margin: 0.3rem 0;">Completed: May 28, 2025</div>
+                            <p style="margin: 0.5rem 0;">Good understanding of basic queries. Needs work on complex joins and optimization.</p>
+                        </div>
+                        
+                        <div class="text-center mt-3">
+                            <a href="#" class="btn btn-outline">View All Assessments</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Recommended Learning Path -->
+                    <div class="card" data-animate>
+                        <h3 class="card-title">📚 Recommended Learning Path</h3>
+                        <div style="margin-bottom: 1rem; padding: 1rem; background-color: #f8f9fa; border-radius: 5px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span style="font-weight: bold;">Cloud Computing Basics</span>
+                                <span style="font-size: 0.9rem;">3 hours</span>
+                            </div>
+                            <p style="margin: 0; font-size: 0.9rem;">Based on your interest in system administration, we recommend starting with cloud fundamentals.</p>
+                        </div>
+                        <div style="margin-bottom: 1rem; padding: 1rem; background-color: #f8f9fa; border-radius: 5px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span style="font-weight: bold;">Advanced SQL Queries</span>
+                                <span style="font-size: 0.9rem;">2 hours</span>
+                            </div>
+                            <p style="margin: 0; font-size: 0.9rem;">Improve your database skills with advanced querying techniques.</p>
+                        </div>
+                        <div style="padding: 1rem; background-color: #f8f9fa; border-radius: 5px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span style="font-weight: bold;">Security Best Practices</span>
+                                <span style="font-size: 0.9rem;">4 hours</span>
+                            </div>
+                            <p style="margin: 0; font-size: 0.9rem;">Build on your networking knowledge with essential security practices.</p>
+                        </div>
+                        <div class="text-center mt-3">
+                            <a href="#" class="btn btn-primary">Start Learning</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>InfoHive</h3>
+                    <p>
+                        Empowering IT students with comprehensive assessment tools 
+                        and personalized learning experiences.
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="index.html">Home</a></p>
+                    <p><a href="#about">About</a></p>
+                    <p><a href="#features">Features</a></p>
+                    <p><a href="login.html">Login</a></p>
+                    <p><a href="register.html">Sign Up</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Assessment Areas</h3>
+                    <p><a href="#">Programming</a></p>
+                    <p><a href="#">Networking</a></p>
+                    <p><a href="#">Databases</a></p>
+                    <p><a href="#">Cloud Computing</a></p>
+                    <p><a href="#">Cybersecurity</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <p><a href="#">Help Center</a></p>
+                    <p><a href="#">Contact Us</a></p>
+                    <p><a href="#">Privacy Policy</a></p>
+                    <p><a href="#">Terms of Service</a></p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 InfoHive. All rights reserved. | Designed for IT Excellence</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Additional JavaScript for profile page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animation for progress bars
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 100);
+            });
+            
+            // Mobile menu toggle (should be in main.js but included here for completeness)
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            mobileMenuToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                mobileMenuToggle.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

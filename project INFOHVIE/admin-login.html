@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - InfoHive</title>
+    <meta name="description" content="Admin sign in to InfoHive to access the administration panel.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <style>
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+        
+        .login-card {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid rgba(255, 204, 0, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #FFCC00, #FFD700);
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #FFCC00, #FFD700);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #000;
+            margin: 0 auto 1rem;
+        }
+        
+        .login-title {
+            color: #FFCC00;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .login-subtitle {
+            color: #e0e0e0;
+            font-size: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #FFCC00;
+            font-weight: 500;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255, 204, 0, 0.3);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #FFCC00;
+            background: rgba(0, 0, 0, 0.7);
+            box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.1);
+        }
+        
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #e0e0e0;
+        }
+        
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #FFCC00;
+        }
+        
+        .forgot-password {
+            color: #FFCC00;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .forgot-password:hover {
+            color: #FFD700;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #FFCC00, #FFD700);
+            color: #000000;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 204, 0, 0.4);
+        }
+        
+        .login-btn:active {
+            transform: translateY(0);
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            position: relative;
+            color: #a0a0a0;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 1;
+        }
+        
+        .divider span {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 0 1rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .social-login {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: transparent;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+        
+        .social-btn:hover {
+            border-color: rgba(255, 204, 0, 0.5);
+            background: rgba(255, 204, 0, 0.1);
+        }
+        
+        .signup-link {
+            text-align: center;
+            color: #e0e0e0;
+        }
+        
+        .signup-link a {
+            color: #FFCC00;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .signup-link a:hover {
+            color: #FFD700;
+        }
+        
+        .back-home {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            color: #FFCC00;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .back-home:hover {
+            color: #FFD700;
+            transform: translateX(-5px);
+        }
+        
+        @media (max-width: 768px) {
+            .login-card {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            .back-home {
+                top: 1rem;
+                left: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-home">← Back to Home</a>
+    
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo"><img src="images/logo.png" style="width: 80px;"></div>
+                <h1 class="login-title">Admin Portal</h1>
+                <p class="login-subtitle">Sign in to access the administration panel</p>
+            </div>
+            
+            <form id="login-form">
+                <input type="hidden" name="userType" value="admin">
+                
+                <div class="form-group">
+                    <label for="email" class="form-label">Admin Email</label>
+                    <input type="email" id="email" name="email" class="form-input" placeholder="Enter admin email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" name="password" class="form-input" placeholder="Enter your password" required>
+                </div>
+                
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" name="remember">
+                        Remember me
+                    </label>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+                
+                <button type="submit" class="login-btn">
+                    Sign In →
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // إضافة بيانات الاعتماد التوضيحية
+            const demoInfo = document.createElement('div');
+            demoInfo.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: rgba(0, 0, 0, 0.9);
+                color: #FF0000;
+                padding: 15px;
+                border-radius: 10px;
+                border: 1px solid rgba(255, 0, 0, 0.3);
+                font-size: 0.9rem;
+                max-width: 300px;
+                z-index: 1000;
+            `;
+            demoInfo.innerHTML = `
+                <strong>Admin Demo Credentials:</strong><br>
+                Email: admin@infohive.com<br>
+                Password: admin123
+            `;
+            document.body.appendChild(demoInfo);
+
+            // تعديل معالجة تسجيل الدخول
+            document.getElementById('login-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+                const rememberMe = document.querySelector('input[name="remember"]').checked;
+                
+                // بيانات الاعتماد الصحيحة للأدمن
+                const adminCredentials = {
+                    email: 'admin@infohive.com',
+                    password: 'admin123'
+                };
+                
+                if (email === adminCredentials.email && password === adminCredentials.password) {
+                    // إنشاء بيانات الجلسة
+                    const sessionData = {
+                        email: adminCredentials.email,
+                        name: 'Admin',
+                        userType: 'admin',
+                        loggedInAt: new Date().toISOString()
+                    };
+                    
+                    // حفظ في localStorage
+                    localStorage.setItem('infohive_current_user', JSON.stringify(sessionData));
+                    localStorage.setItem('infohive_user_type', 'admin');
+                    
+                    if (rememberMe) {
+                        // تعيين كوكي للتذكر (7 أيام)
+                        document.cookie = `infohive_remember_me=true; max-age=${60 * 60 * 24 * 7}; path=/`;
+                    }
+                    
+                    // توجيه إلى لوحة التحكم
+                    window.location.href = 'admin-dashboard.html';
+                } else {
+                    alert('Invalid admin credentials. Please try again.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

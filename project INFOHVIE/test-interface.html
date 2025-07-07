@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Interface - InfoHive</title>
+    <meta name="description" content="Take your IT assessment test with InfoHive's interactive test interface.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <style>
+        .test-interface {
+            padding-top: 80px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(255, 204, 0, 0.1));
+        }
+        
+        .test-header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(255, 204, 0, 0.2);
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+        
+        .test-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .test-info {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .test-title {
+            color: #FFCC00;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .test-progress {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .progress-text {
+            color: #e0e0e0;
+            font-size: 0.9rem;
+        }
+        
+        .progress-bar-container {
+            width: 200px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #FFCC00, #FFD700);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 20%;
+        }
+        
+        .test-timer {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .timer-display {
+            background: rgba(255, 204, 0, 0.2);
+            border: 1px solid #FFCC00;
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            color: #FFCC00;
+            font-weight: 600;
+            font-size: 1.1rem;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .timer-warning {
+            background: rgba(244, 67, 54, 0.2);
+            border-color: #f44336;
+            color: #f44336;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .test-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .test-content {
+            padding: 180px 0 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .question-container {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid rgba(255, 204, 0, 0.2);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .question-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #FFCC00, #FFD700);
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .question-number {
+            color: #FFCC00;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .question-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .flag-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid rgba(255, 204, 0, 0.3);
+            border-radius: 8px;
+            background: transparent;
+            color: #FFCC00;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .flag-btn:hover,
+        .flag-btn.flagged {
+            border-color: #FFCC00;
+            background: rgba(255, 204, 0, 0.2);
+        }
+        
+        .question-text {
+            color: #ffffff;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+        
+        .question-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .option:hover {
+            border-color: rgba(255, 204, 0, 0.5);
+            background: rgba(255, 204, 0, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .option.selected {
+            border-color: #FFCC00;
+            background: rgba(255, 204, 0, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .option label {
+            color: #e0e0e0;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            width: 100%;
+        }
+        
+        .option-letter {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 204, 0, 0.2);
+            border: 2px solid rgba(255, 204, 0, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFCC00;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .option.selected .option-letter {
+            background: #FFCC00;
+            color: #000;
+            border-color: #FFCC00;
+        }
+        
+        .option-text {
+            flex: 1;
+            line-height: 1.5;
+        }
+        
+        .navigation-container {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 204, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .nav-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-btn-primary {
+            background: linear-gradient(45deg, #FFCC00, #FFD700);
+            color: #000000;
+        }
+        
+        .nav-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 204, 0, 0.4);
+        }
+        
+        .nav-btn-secondary {
+            background: transparent;
+            color: #FFCC00;
+            border: 2px solid #FFCC00;
+        }
+        
+        .nav-btn-secondary:hover {
+            background: rgba(255, 204, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .question-overview {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 204, 0, 0.2);
+            margin-bottom: 2rem;
+        }
+        
+        .overview-title {
+            color: #FFCC00;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+            gap: 1rem;
+        }
+        
+        .question-item {
+            width: 50px;
+            height: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #e0e0e0;
+            font-weight: 600;
+        }
+        
+        .question-item:hover {
+            border-color: rgba(255, 204, 0, 0.5);
+            background: rgba(255, 204, 0, 0.1);
+        }
+        
+        .question-item.current {
+            border-color: #FFCC00;
+            background: rgba(255, 204, 0, 0.2);
+            color: #FFCC00;
+        }
+        
+        .question-item.answered {
+            border-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+        }
+        
+        .question-item.flagged {
+            border-color: #ff9800;
+            background: rgba(255, 152, 0, 0.2);
+            color: #ff9800;
+        }
+        
+        .submit-container {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 204, 0, 0.2);
+            text-align: center;
+        }
+        
+        .submit-warning {
+            color: #e0e0e0;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .submit-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .submit-stat {
+            text-align: center;
+        }
+        
+        .submit-stat-number {
+            color: #FFCC00;
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+        
+        .submit-stat-label {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .test-nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .test-info {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .test-content {
+                padding: 220px 1rem 2rem;
+            }
+            
+            .question-container {
+                padding: 2rem 1.5rem;
+            }
+            
+            .question-text {
+                font-size: 1.1rem;
+            }
+            
+            .option {
+                padding: 1rem;
+            }
+            
+            .option label {
+                font-size: 1rem;
+            }
+            
+            .navigation-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-buttons {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .nav-btn {
+                flex: 1;
+                justify-content: center;
+            }
+            
+            .question-grid {
+                grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+            }
+            
+            .question-item {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="test-header">
+        <div class="container">
+            <div class="test-nav">
+                <div class="test-info">
+                    <div class="test-title" id="test-title">Programming Fundamentals</div>
+                    <div class="test-progress">
+                        <span class="progress-text" id="progress-text">1/5 answered</span>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="progress-bar"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="test-timer">
+                    <span style="color: #e0e0e0;">Time Remaining:</span>
+                    <div class="timer-display" id="timer-display">30:00</div>
+                </div>
+                
+                <div class="test-actions">
+                    <button class="btn btn-outline" onclick="showQuestionOverview()">Overview</button>
+                    <button class="btn btn-secondary" data-action="submit-test">Submit Test</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="test-interface">
+        <div class="test-content container">
+            <!-- Question Overview (Hidden by default) -->
+            <div class="question-overview" id="question-overview" style="display: none;">
+                <h2 class="overview-title">📋 Question Overview</h2>
+                <div class="question-grid" id="question-grid">
+                </div>
+                <div style="margin-top: 1.5rem; text-align: center;">
+                    <button class="btn btn-secondary" onclick="hideQuestionOverview()">Back to Question</button>
+                </div>
+            </div>
+
+            <!-- Question Container -->
+            <div class="question-container" id="question-container">
+                <div class="question-header">
+                    <div class="question-number" id="question-number">Question 1 of 5</div>
+                    <div class="question-actions">
+                        <button class="flag-btn" data-action="flag-question" id="flag-btn">🚩 Flag</button>
+                    </div>
+                </div>
+                
+                <div class="question-text" id="question-text">
+                    What is the primary purpose of a firewall in network security?
+                </div>
+                
+                <form class="question-options" id="question-form">
+                    <div class="option">
+                        <input type="radio" name="answer" value="0" id="option-0">
+                        <label for="option-0">
+                            <div class="option-letter">A</div>
+                            <div class="option-text">To encrypt data transmission</div>
+                        </label>
+                    </div>
+                    
+                    <div class="option">
+                        <input type="radio" name="answer" value="1" id="option-1">
+                        <label for="option-1">
+                            <div class="option-letter">B</div>
+                            <div class="option-text">To filter network traffic based on security rules</div>
+                        </label>
+                    </div>
+                    
+                    <div class="option">
+                        <input type="radio" name="answer" value="2" id="option-2">
+                        <label for="option-2">
+                            <div class="option-letter">C</div>
+                            <div class="option-text">To provide user authentication</div>
+                        </label>
+                    </div>
+                    
+                    <div class="option">
+                        <input type="radio" name="answer" value="3" id="option-3">
+                        <label for="option-3">
+                            <div class="option-letter">D</div>
+                            <div class="option-text">To backup network configurations</div>
+                        </label>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Navigation -->
+            <div class="navigation-container">
+                <div class="nav-buttons">
+                    <button class="nav-btn nav-btn-secondary" id="prev-btn" data-action="prev-question" disabled>
+                        ← Previous
+                    </button>
+                    <button class="nav-btn nav-btn-primary" id="next-btn" data-action="next-question">
+                        Next →
+                    </button>
+                </div>
+                
+                <div style="color: #e0e0e0; text-align: center;">
+                    <span id="current-question-info">Question 1 of 5</span>
+                </div>
+            </div>
+
+            <!-- Submit Container (Hidden by default) -->
+            <div class="submit-container" id="submit-container" style="display: none;">
+                <h2 style="color: #FFCC00; margin-bottom: 1rem;">Ready to Submit?</h2>
+                <div class="submit-warning">
+                    Please review your answers before submitting. You cannot change your answers after submission.
+                </div>
+                
+                <div class="submit-stats">
+                    <div class="submit-stat">
+                        <span class="submit-stat-number" id="answered-count">0</span>
+                        <span class="submit-stat-label">Answered</span>
+                    </div>
+                    <div class="submit-stat">
+                        <span class="submit-stat-number" id="unanswered-count">5</span>
+                        <span class="submit-stat-label">Unanswered</span>
+                    </div>
+                    <div class="submit-stat">
+                        <span class="submit-stat-number" id="flagged-count">0</span>
+                        <span class="submit-stat-label">Flagged</span>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn-outline" onclick="hideSubmitContainer()">Review Answers</button>
+                    <button class="btn btn-primary" onclick="confirmSubmit()">Submit Test</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Test interface functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = localStorage.getItem('infohive_user');
+            const userType = localStorage.getItem('infohive_user_type');
+            
+            if (!user || userType !== 'student') {
+                InfoHive.showNotification('Please login as a student to take tests.', 'warning');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000);
+                return;
+            }
+            
+            // Initialize test
+            initializeTest();
+            
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Start timer
+            startTimer();
+        });
+        
+        // Test data and state
+        let testState = {
+            currentQuestion: 0,
+            answers: {},
+            flagged: new Set(),
+            timeRemaining: 30 * 60, // 30 minutes
+            timer: null,
+            questions: [
+                {
+                    id: 1,
+                    question: 'What is the primary purpose of a firewall in network security?',
+                    options: [
+                        'To encrypt data transmission',
+                        'To filter network traffic based on security rules',
+                        'To provide user authentication',
+                        'To backup network configurations'
+                    ],
+                    correct: 1
+                },
+                {
+                    id: 2,
+                    question: 'Which programming paradigm focuses on objects and classes?',
+                    options: [
+                        'Functional Programming',
+                        'Procedural Programming',
+                        'Object-Oriented Programming',
+                        'Logic Programming'
+                    ],
+                    correct: 2
+                },
+                {
+                    id: 3,
+                    question: 'What does SQL stand for?',
+                    options: [
+                        'Structured Query Language',
+                        'Simple Query Language',
+                        'Standard Query Language',
+                        'System Query Language'
+                    ],
+                    correct: 0
+                },
+                {
+                    id: 4,
+                    question: 'Which of the following is NOT a web development framework?',
+                    options: [
+                        'React',
+                        'Angular',
+                        'Vue.js',
+                        'Photoshop'
+                    ],
+                    correct: 3
+                },
+                {
+                    id: 5,
+                    question: 'What is the main purpose of version control systems like Git?',
+                    options: [
+                        'To compile code',
+                        'To track changes in source code',
+                        'To debug applications',
+                        'To deploy applications'
+                    ],
+                    correct: 1
+                }
+            ]
+        };
+        
+        function initializeTest() {
+            updateQuestionDisplay();
+            updateProgress();
+            generateQuestionOverview();
+        }
+        
+        function setupEventListeners() {
+            // Option selection
+            document.addEventListener('change', function(e) {
+                if (e.target.name === 'answer') {
+                    const questionId = testState.questions[testState.currentQuestion].id;
+                    testState.answers[questionId] = parseInt(e.target.value);
+                    
+                    // Update option styling
+                    document.querySelectorAll('.option').forEach(option => {
+                        option.classList.remove('selected');
+                    });
+                    e.target.closest('.option').classList.add('selected');
+                    
+                    updateProgress();
+                    updateQuestionOverview();
+                }
+            });
+            
+            // Navigation buttons
+            document.getElementById('prev-btn').addEventListener('click', previousQuestion);
+            document.getElementById('next-btn').addEventListener('click', nextQuestion);
+            
+            // Flag button
+            document.getElementById('flag-btn').addEventListener('click', toggleFlag);
+        }
+        
+        function updateQuestionDisplay() {
+            const question = testState.questions[testState.currentQuestion];
+            
+            // Update question number and text
+            document.getElementById('question-number').textContent = `Question ${testState.currentQuestion + 1} of ${testState.questions.length}`;
+            document.getElementById('question-text').textContent = question.question;
+            document.getElementById('current-question-info').textContent = `Question ${testState.currentQuestion + 1} of ${testState.questions.length}`;
+            
+            // Update options
+            const form = document.getElementById('question-form');
+            form.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                
+                const isSelected = testState.answers[question.id] === index;
+                if (isSelected) {
+                    optionDiv.classList.add('selected');
+                }
+                
+                optionDiv.innerHTML = `
+                    <input type="radio" name="answer" value="${index}" id="option-${index}" ${isSelected ? 'checked' : ''}>
+                    <label for="option-${index}">
+                        <div class="option-letter">${String.fromCharCode(65 + index)}</div>
+                        <div class="option-text">${option}</div>
+                    </label>
+                `;
+                
+                form.appendChild(optionDiv);
+            });
+            
+            // Update navigation buttons
+            document.getElementById('prev-btn').disabled = testState.currentQuestion === 0;
+            document.getElementById('next-btn').textContent = testState.currentQuestion === testState.questions.length - 1 ? 'Finish' : 'Next →';
+            
+            // Update flag button
+            const flagBtn = document.getElementById('flag-btn');
+            if (testState.flagged.has(question.id)) {
+                flagBtn.textContent = '🚩 Unflag';
+                flagBtn.classList.add('flagged');
+            } else {
+                flagBtn.textContent = '🚩 Flag';
+                flagBtn.classList.remove('flagged');
+            }
+        }
+        
+        function updateProgress() {
+            const answeredCount = Object.keys(testState.answers).length;
+            const totalQuestions = testState.questions.length;
+            const progressPercentage = (answeredCount / totalQuestions) * 100;
+            
+            document.getElementById('progress-text').textContent = `${answeredCount}/${totalQuestions} answered`;
+            document.getElementById('progress-bar').style.width = `${progressPercentage}%`;
+        }
+        
+        function generateQuestionOverview() {
+            const grid = document.getElementById('question-grid');
+            grid.innerHTML = '';
+            
+            testState.questions.forEach((question, index) => {
+                const item = document.createElement('div');
+                item.className = 'question-item';
+                item.textContent = index + 1;
+                item.onclick = () => goToQuestion(index);
+                
+                if (index === testState.currentQuestion) {
+                    item.classList.add('current');
+                }
+                
+                if (testState.answers.hasOwnProperty(question.id)) {
+                    item.classList.add('answered');
+                }
+                
+                if (testState.flagged.has(question.id)) {
+                    item.classList.add('flagged');
+                }
+                
+                grid.appendChild(item);
+            });
+        }
+        
+        function previousQuestion() {
+            if (testState.currentQuestion > 0) {
+                testState.currentQuestion--;
+                updateQuestionDisplay();
+                updateQuestionOverview();
+            }
+        }
+        
+        function nextQuestion() {
+            if (testState.currentQuestion < testState.questions.length - 1) {
+                testState.currentQuestion++;
+                updateQuestionDisplay();
+                updateQuestionOverview();
+            } else {
+                // Show submit container
+                showSubmitContainer();
+            }
+        }
+        
+        function goToQuestion(index) {
+            testState.currentQuestion = index;
+            updateQuestionDisplay();
+            updateQuestionOverview();
+            hideQuestionOverview();
+        }
+        
+        function toggleFlag() {
+            const questionId = testState.questions[testState.currentQuestion].id;
+            
+            if (testState.flagged.has(questionId)) {
+                testState.flagged.delete(questionId);
+            } else {
+                testState.flagged.add(questionId);
+            }
+            
+            updateQuestionDisplay();
+            updateQuestionOverview();
+        }
+        
+        function showQuestionOverview() {
+            document.getElementById('question-overview').style.display = 'block';
+            document.getElementById('question-container').style.display = 'none';
+            document.querySelector('.navigation-container').style.display = 'none';
+        }
+        
+        function hideQuestionOverview() {
+            document.getElementById('question-overview').style.display = 'none';
+            document.getElementById('question-container').style.display = 'block';
+            document.querySelector('.navigation-container').style.display = 'flex';
+        }
+        
+        function showSubmitContainer() {
+            const answeredCount = Object.keys(testState.answers).length;
+            const unansweredCount = testState.questions.length - answeredCount;
+            const flaggedCount = testState.flagged.size;
+            
+            document.getElementById('answered-count').textContent = answeredCount;
+            document.getElementById('unanswered-count').textContent = unansweredCount;
+            document.getElementById('flagged-count').textContent = flaggedCount;
+            
+            document.getElementById('submit-container').style.display = 'block';
+            document.getElementById('question-container').style.display = 'none';
+            document.querySelector('.navigation-container').style.display = 'none';
+        }
+        
+        function hideSubmitContainer() {
+            document.getElementById('submit-container').style.display = 'none';
+            document.getElementById('question-container').style.display = 'block';
+            document.querySelector('.navigation-container').style.display = 'flex';
+        }
+        
+        function confirmSubmit() {
+            if (confirm('Are you sure you want to submit your test? You cannot change your answers after submission.')) {
+                submitTest();
+            }
+        }
+        
+        function submitTest() {
+            // Stop timer
+            if (testState.timer) {
+                clearInterval(testState.timer);
+            }
+            
+            // Calculate score
+            let correct = 0;
+            testState.questions.forEach(question => {
+                if (testState.answers[question.id] === question.correct) {
+                    correct++;
+                }
+            });
+            
+            const score = Math.round((correct / testState.questions.length) * 100);
+            
+            // Store results
+            const results = {
+                testId: 'programming-fundamentals',
+                testName: 'Programming Fundamentals',
+                score: score,
+                correct: correct,
+                total: testState.questions.length,
+                answers: testState.answers,
+                timeSpent: (30 * 60) - testState.timeRemaining,
+                completedAt: new Date().toISOString()
+            };
+            
+            localStorage.setItem('infohive_last_result', JSON.stringify(results));
+            
+            // Show success message and redirect
+            InfoHive.showNotification('Test submitted successfully!', 'success');
+            setTimeout(() => {
+                window.location.href = 'results.html';
+            }, 2000);
+        }
+        
+        function startTimer() {
+            testState.timer = setInterval(() => {
+                testState.timeRemaining--;
+                updateTimerDisplay();
+                
+                if (testState.timeRemaining <= 0) {
+                    InfoHive.showNotification('Time is up! Submitting test automatically.', 'warning');
+                    setTimeout(submitTest, 2000);
+                }
+            }, 1000);
+        }
+        
+        function updateTimerDisplay() {
+            const minutes = Math.floor(testState.timeRemaining / 60);
+            const seconds = testState.timeRemaining % 60;
+            const display = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            
+            const timerElement = document.getElementById('timer-display');
+            timerElement.textContent = display;
+            
+            // Add warning style when time is low
+            if (testState.timeRemaining <= 300) { // 5 minutes
+                timerElement.classList.add('timer-warning');
+            }
+        }
+    </script>
+</body>
+</html>
+

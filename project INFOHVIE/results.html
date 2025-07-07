@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Results - InfoHive</title>
+    <meta name="description" content="View your IT assessment test results and performance analysis.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <style>
+        .results-container {
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+        
+        .results-header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 3rem 0;
+            border-bottom: 1px solid rgba(255, 204, 0, 0.2);
+            text-align: center;
+        }
+        
+        .results-header h1 {
+            color: #FFCC00;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .results-header p {
+            color: #e0e0e0;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .results-content {
+            padding: 3rem 0;
+        }
+        
+        .score-section {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid rgba(255, 204, 0, 0.2);
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .score-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #FFCC00, #FFD700);
+        }
+        
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(#FFCC00 0deg, #FFCC00 var(--score-angle), rgba(255, 255, 255, 0.1) var(--score-angle), rgba(255, 255, 255, 0.1) 360deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+        
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.9);
+        }
+        
+        .score-display {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        
+        .score-number {
+            color: #FFCC00;
+            font-size: 3rem;
+            font-weight: 700;
+            display: block;
+        }
+        
+        .score-label {
+            color: #e0e0e0;
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .score-status {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .score-status.excellent {
+            color: #4CAF50;
+        }
+        
+        .score-status.good {
+            color: #8BC34A;
+        }
+        
+        .score-status.average {
+            color: #FF9800;
+        }
+        
+        .score-status.poor {
+            color: #f44336;
+        }
+        
+        .score-message {
+            color: #e0e0e0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .results-card {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 204, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .results-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 204, 0, 0.2);
+            border-color: rgba(255, 204, 0, 0.4);
+        }
+        
+        .card-title {
+            color: #FFCC00;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        .stat-number {
+            color: #FFCC00;
+            font-size: 1.8rem;
+            font-weight: 600;
+            display: block;
+        }
+        
+        .stat-label {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .performance-chart {
+            height: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #a0a0a0;
+            font-style: italic;
+            margin-top: 1rem;
+        }
+        
+        .question-review {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 204, 0, 0.2);
+            margin-bottom: 3rem;
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .review-title {
+            color: #FFCC00;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid rgba(255, 204, 0, 0.3);
+            border-radius: 20px;
+            background: transparent;
+            color: #FFCC00;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            border-color: #FFCC00;
+            background: rgba(255, 204, 0, 0.2);
+        }
+        
+        .question-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid transparent;
+        }
+        
+        .question-item.correct {
+            border-left-color: #4CAF50;
+        }
+        
+        .question-item.incorrect {
+            border-left-color: #f44336;
+        }
+        
+        .question-item.unanswered {
+            border-left-color: #ff9800;
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .question-number {
+            color: #FFCC00;
+            font-weight: 600;
+        }
+        
+        .question-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-correct {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+            border: 1px solid #4CAF50;
+        }
+        
+        .status-incorrect {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+            border: 1px solid #f44336;
+        }
+        
+        .status-unanswered {
+            background: rgba(255, 152, 0, 0.2);
+            color: #ff9800;
+            border: 1px solid #ff9800;
+        }
+        
+        .question-text {
+            color: #e0e0e0;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        
+        .answer-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .answer-option {
+            padding: 0.75rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .answer-option.correct {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4CAF50;
+            color: #4CAF50;
+        }
+        
+        .answer-option.selected {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #f44336;
+            color: #f44336;
+        }
+        
+        .option-letter {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .recommendations {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 204, 0, 0.2);
+            margin-bottom: 3rem;
+        }
+        
+        .recommendations-title {
+            color: #FFCC00;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .recommendation-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #FFCC00;
+        }
+        
+        .recommendation-title {
+            color: #FFCC00;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .recommendation-text {
+            color: #e0e0e0;
+            line-height: 1.5;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .action-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .action-btn-primary {
+            background: linear-gradient(45deg, #FFCC00, #FFD700);
+            color: #000000;
+        }
+        
+        .action-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 204, 0, 0.4);
+        }
+        
+        .action-btn-secondary {
+            background: transparent;
+            color: #FFCC00;
+            border: 2px solid #FFCC00;
+        }
+        
+        .action-btn-secondary:hover {
+            background: rgba(255, 204, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 1024px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .results-header h1 {
+                font-size: 2rem;
+            }
+            
+            .score-circle {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .score-circle::before {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .score-number {
+                font-size: 2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .question-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .filter-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .action-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+                                           <img src="images/3.png" style="width: 120px;">
+
+            
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link" data-page="index">Home</a></li>
+                <li><a href="student-dashboard.html" class="nav-link" data-page="student-dashboard">Dashboard</a></li>
+                <li><a href="test-selection.html" class="nav-link" data-page="test-selection">Tests</a></li>
+                <li><a href="results.html" class="nav-link active" data-page="results">Results</a></li>
+                <li><a href="#" class="nav-link">Profile</a></li>
+                <li><a href="#" class="nav-link" data-action="logout">Logout</a></li>
+            </ul>
+            
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="results-container">
+        <!-- Results Header -->
+        <section class="results-header">
+            <div class="container">
+                <h1>Test Results</h1>
+                <p>Comprehensive analysis of your performance and recommendations for improvement</p>
+            </div>
+        </section>
+
+        <!-- Results Content -->
+        <section class="results-content">
+            <div class="container">
+                <!-- Score Section -->
+                <div class="score-section">
+                    <div class="score-circle" id="score-circle">
+                        <div class="score-display">
+                            <span class="score-number" id="score-number">85</span>
+                            <div class="score-label">Score</div>
+                        </div>
+                    </div>
+                    
+                    <div class="score-status excellent" id="score-status">Excellent Performance!</div>
+                    <div class="score-message" id="score-message">
+                        Congratulations! You've demonstrated strong understanding of the subject matter. 
+                        Your performance indicates solid foundational knowledge with room for advanced topics.
+                    </div>
+                </div>
+
+                <!-- Results Grid -->
+                <div class="results-grid">
+                    <!-- Test Statistics -->
+                    <div class="results-card">
+                        <h2 class="card-title">📊 Test Statistics</h2>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <span class="stat-number" id="correct-answers">4</span>
+                                <div class="stat-label">Correct Answers</div>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="incorrect-answers">1</span>
+                                <div class="stat-label">Incorrect Answers</div>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="time-spent">25:30</span>
+                                <div class="stat-label">Time Spent</div>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="accuracy">80%</span>
+                                <div class="stat-label">Accuracy Rate</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Performance Analysis -->
+                    <div class="results-card">
+                        <h2 class="card-title">📈 Performance Analysis</h2>
+                        <div class="performance-chart">
+                            Performance chart would be displayed here
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question Review -->
+                <div class="question-review">
+                    <div class="review-header">
+                        <h2 class="review-title">📝 Question Review</h2>
+                        <div class="filter-buttons">
+                            <button class="filter-btn active" data-filter="all">All Questions</button>
+                            <button class="filter-btn" data-filter="correct">Correct</button>
+                            <button class="filter-btn" data-filter="incorrect">Incorrect</button>
+                            <button class="filter-btn" data-filter="unanswered">Unanswered</button>
+                        </div>
+                    </div>
+                    
+                    <div id="questions-container">
+                        <!-- Questions will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Recommendations -->
+                <div class="recommendations">
+                    <h2 class="recommendations-title">💡 Recommendations</h2>
+                    
+                    <div class="recommendation-item">
+                        <div class="recommendation-title">Study Network Security Fundamentals</div>
+                        <div class="recommendation-text">
+                            Focus on understanding firewall configurations and network security protocols. 
+                            Consider reviewing materials on intrusion detection systems and security best practices.
+                        </div>
+                    </div>
+                    
+                    <div class="recommendation-item">
+                        <div class="recommendation-title">Practice Programming Concepts</div>
+                        <div class="recommendation-text">
+                            Strengthen your understanding of object-oriented programming principles. 
+                            Work on practical coding exercises to reinforce theoretical knowledge.
+                        </div>
+                    </div>
+                    
+                    <div class="recommendation-item">
+                        <div class="recommendation-title">Explore Advanced Topics</div>
+                        <div class="recommendation-text">
+                            Your strong foundation allows you to tackle more advanced subjects. 
+                            Consider exploring cloud computing, DevOps practices, or cybersecurity specializations.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <a href="test-selection.html" class="action-btn action-btn-primary">
+                        🔄 Take Another Test
+                    </a>
+                    <a href="student-dashboard.html" class="action-btn action-btn-secondary">
+                        📊 View Dashboard
+                    </a>
+                    <a href="#" class="action-btn action-btn-secondary" onclick="downloadResults()">
+                        📥 Download Results
+                    </a>
+                    <a href="#" class="action-btn action-btn-secondary" onclick="shareResults()">
+                        📤 Share Results
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Results page functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = localStorage.getItem('infohive_user');
+            const userType = localStorage.getItem('infohive_user_type');
+            
+            if (!user || userType !== 'student') {
+                InfoHive.showNotification('Please login as a student to view results.', 'warning');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000);
+                return;
+            }
+            
+            // Load and display results
+            loadResults();
+            
+            // Setup filter functionality
+            setupFilters();
+        });
+        
+        function loadResults() {
+            // Get results from localStorage or use demo data
+            const resultsData = localStorage.getItem('infohive_last_result');
+            let results;
+            
+            if (resultsData) {
+                results = JSON.parse(resultsData);
+            } else {
+                // Demo data
+                results = {
+                    testId: 'programming-fundamentals',
+                    testName: 'Programming Fundamentals',
+                    score: 80,
+                    correct: 4,
+                    total: 5,
+                    timeSpent: 1530, // seconds
+                    answers: {1: 1, 2: 2, 3: 0, 4: 3, 5: 1},
+                    completedAt: new Date().toISOString()
+                };
+            }
+            
+            // Demo questions for review
+            const questions = [
+                {
+                    id: 1,
+                    question: 'What is the primary purpose of a firewall in network security?',
+                    options: [
+                        'To encrypt data transmission',
+                        'To filter network traffic based on security rules',
+                        'To provide user authentication',
+                        'To backup network configurations'
+                    ],
+                    correct: 1,
+                    userAnswer: results.answers[1]
+                },
+                {
+                    id: 2,
+                    question: 'Which programming paradigm focuses on objects and classes?',
+                    options: [
+                        'Functional Programming',
+                        'Procedural Programming',
+                        'Object-Oriented Programming',
+                        'Logic Programming'
+                    ],
+                    correct: 2,
+                    userAnswer: results.answers[2]
+                },
+                {
+                    id: 3,
+                    question: 'What does SQL stand for?',
+                    options: [
+                        'Structured Query Language',
+                        'Simple Query Language',
+                        'Standard Query Language',
+                        'System Query Language'
+                    ],
+                    correct: 0,
+                    userAnswer: results.answers[3]
+                },
+                {
+                    id: 4,
+                    question: 'Which of the following is NOT a web development framework?',
+                    options: [
+                        'React',
+                        'Angular',
+                        'Vue.js',
+                        'Photoshop'
+                    ],
+                    correct: 3,
+                    userAnswer: results.answers[4]
+                },
+                {
+                    id: 5,
+                    question: 'What is the main purpose of version control systems like Git?',
+                    options: [
+                        'To compile code',
+                        'To track changes in source code',
+                        'To debug applications',
+                        'To deploy applications'
+                    ],
+                    correct: 1,
+                    userAnswer: results.answers[5]
+                }
+            ];
+            
+            // Update score display
+            updateScoreDisplay(results);
+            
+            // Update statistics
+            updateStatistics(results);
+            
+            // Display question review
+            displayQuestionReview(questions);
+        }
+        
+        function updateScoreDisplay(results) {
+            const scoreNumber = document.getElementById('score-number');
+            const scoreStatus = document.getElementById('score-status');
+            const scoreMessage = document.getElementById('score-message');
+            const scoreCircle = document.getElementById('score-circle');
+            
+            // Update score number
+            scoreNumber.textContent = results.score;
+            
+            // Update score circle
+            const angle = (results.score / 100) * 360;
+            scoreCircle.style.setProperty('--score-angle', `${angle}deg`);
+            
+            // Update status and message based on score
+            if (results.score >= 90) {
+                scoreStatus.textContent = 'Excellent Performance!';
+                scoreStatus.className = 'score-status excellent';
+                scoreMessage.textContent = 'Outstanding! You have mastered this subject area and are ready for advanced challenges.';
+            } else if (results.score >= 80) {
+                scoreStatus.textContent = 'Good Performance!';
+                scoreStatus.className = 'score-status good';
+                scoreMessage.textContent = 'Well done! You have a solid understanding with room for some improvement in specific areas.';
+            } else if (results.score >= 60) {
+                scoreStatus.textContent = 'Average Performance';
+                scoreStatus.className = 'score-status average';
+                scoreMessage.textContent = 'You have basic understanding but should focus on strengthening your knowledge in key areas.';
+            } else {
+                scoreStatus.textContent = 'Needs Improvement';
+                scoreStatus.className = 'score-status poor';
+                scoreMessage.textContent = 'Consider reviewing the fundamentals and practicing more before attempting advanced topics.';
+            }
+        }
+        
+        function updateStatistics(results) {
+            document.getElementById('correct-answers').textContent = results.correct;
+            document.getElementById('incorrect-answers').textContent = results.total - results.correct;
+            
+            // Format time spent
+            const minutes = Math.floor(results.timeSpent / 60);
+            const seconds = results.timeSpent % 60;
+            document.getElementById('time-spent').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Calculate accuracy
+            const accuracy = Math.round((results.correct / results.total) * 100);
+            document.getElementById('accuracy').textContent = `${accuracy}%`;
+        }
+        
+        function displayQuestionReview(questions) {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+            
+            questions.forEach((question, index) => {
+                const isCorrect = question.userAnswer === question.correct;
+                const isAnswered = question.userAnswer !== undefined;
+                
+                let status, statusClass;
+                if (!isAnswered) {
+                    status = 'Unanswered';
+                    statusClass = 'unanswered';
+                } else if (isCorrect) {
+                    status = 'Correct';
+                    statusClass = 'correct';
+                } else {
+                    status = 'Incorrect';
+                    statusClass = 'incorrect';
+                }
+                
+                const questionElement = document.createElement('div');
+                questionElement.className = `question-item ${statusClass}`;
+                questionElement.dataset.filter = statusClass;
+                
+                questionElement.innerHTML = `
+                    <div class="question-header">
+                        <div class="question-number">Question ${index + 1}</div>
+                        <div class="question-status status-${statusClass}">${status}</div>
+                    </div>
+                    
+                    <div class="question-text">${question.question}</div>
+                    
+                    <div class="answer-options">
+                        ${question.options.map((option, optionIndex) => {
+                            let optionClass = '';
+                            if (optionIndex === question.correct) {
+                                optionClass = 'correct';
+                            } else if (optionIndex === question.userAnswer && optionIndex !== question.correct) {
+                                optionClass = 'selected';
+                            }
+                            
+                            return `
+                                <div class="answer-option ${optionClass}">
+                                    <div class="option-letter">${String.fromCharCode(65 + optionIndex)}</div>
+                                    <div>${option}</div>
+                                    ${optionIndex === question.correct ? ' ✓' : ''}
+                                    ${optionIndex === question.userAnswer && optionIndex !== question.correct ? ' ✗' : ''}
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+                
+                container.appendChild(questionElement);
+            });
+        }
+        
+        function setupFilters() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const questionItems = document.querySelectorAll('.question-item');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.dataset.filter;
+                    
+                    // Filter questions
+                    questionItems.forEach(item => {
+                        if (filter === 'all' || item.dataset.filter === filter) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        }
+        
+        function downloadResults() {
+            InfoHive.showNotification('Results download feature coming soon!', 'info');
+        }
+        
+        function shareResults() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'InfoHive Test Results',
+                    text: 'Check out my test results on InfoHive!',
+                    url: window.location.href
+                });
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                const url = window.location.href;
+                navigator.clipboard.writeText(url).then(() => {
+                    InfoHive.showNotification('Results URL copied to clipboard!', 'success');
+                }).catch(() => {
+                    InfoHive.showNotification('Share feature not supported on this browser.', 'info');
+                });
+            }
+        }
+    </script>
+</body>
+</html>
+
