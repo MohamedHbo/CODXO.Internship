@@ -3,26 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Login - InfoHive</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Login - InfoHive</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .login-container {
-            min-height: 100vh;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #121212;
+            color: #fff;
             display: flex;
-            align-items: center;
             justify-content: center;
-            padding: 2rem 1rem;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+            padding: 2rem;
         }
         
         .login-card {
             background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(20px);
             border-radius: 20px;
             padding: 3rem;
             border: 1px solid rgba(255, 204, 0, 0.3);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 450px;
             position: relative;
             overflow: hidden;
         }
@@ -45,14 +52,6 @@
         .login-logo {
             width: 80px;
             height: 80px;
-            background: linear-gradient(45deg, #FFCC00, #FFD700);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            font-weight: bold;
-            color: #000;
             margin: 0 auto 1rem;
         }
         
@@ -96,10 +95,6 @@
             box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.1);
         }
         
-        .form-input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-        
         .form-options {
             display: flex;
             justify-content: space-between;
@@ -124,11 +119,6 @@
         .forgot-password {
             color: #FFCC00;
             text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .forgot-password:hover {
-            color: #FFD700;
         }
         
         .login-btn {
@@ -150,62 +140,6 @@
             box-shadow: 0 8px 25px rgba(255, 204, 0, 0.4);
         }
         
-        .login-btn:active {
-            transform: translateY(0);
-        }
-        
-        .divider {
-            text-align: center;
-            margin: 1.5rem 0;
-            position: relative;
-            color: #a0a0a0;
-        }
-        
-        .divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.2);
-            z-index: 1;
-        }
-        
-        .divider span {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 0 1rem;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .social-login {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        
-        .social-btn {
-            flex: 1;
-            padding: 12px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            background: transparent;
-            color: #ffffff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-weight: 500;
-        }
-        
-        .social-btn:hover {
-            border-color: rgba(255, 204, 0, 0.5);
-            background: rgba(255, 204, 0, 0.1);
-        }
-        
         .signup-link {
             text-align: center;
             color: #e0e0e0;
@@ -217,26 +151,11 @@
             font-weight: 600;
         }
         
-        .signup-link a:hover {
-            color: #FFD700;
-        }
-        
-        .back-home {
-            position: absolute;
-            top: 2rem;
-            left: 2rem;
-            color: #FFCC00;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        
-        .back-home:hover {
-            color: #FFD700;
-            transform: translateX(-5px);
+        .error-message {
+            color: #f44336;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
         }
         
         @media (max-width: 768px) {
@@ -244,34 +163,29 @@
                 padding: 2rem;
                 margin: 1rem;
             }
-            
-            .back-home {
-                top: 1rem;
-                left: 1rem;
-            }
         }
     </style>
 </head>
 <body>
-    <a href="index.html" class="back-home">← Back to Home</a>
-    
     <div class="login-container">
         <div class="login-card">
             <div class="login-header">
-                <div class="login-logo"><img src="images/logo.png" style="width: 80px;"></div>
-                <h1 class="login-title">Student Login</h1>
-                <p class="login-subtitle">Sign in to access your IT assessments and track progress</p>
+                <div class="login-logo"><img src="images/3.png" style="width: 80px;"></div>
+                <h1 class="login-title">Welcome Back</h1>
+                <p class="login-subtitle">Sign in to continue your IT assessment journey</p>
             </div>
             
             <form id="login-form">
                 <div class="form-group">
-                    <label for="email" class="form-label">Student Email</label>
-                    <input type="email" id="email" name="email" class="form-input" placeholder="Enter student email" required>
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email" required>
+                    <div class="error-message" id="email-error"></div>
                 </div>
                 
                 <div class="form-group">
                     <label for="password" class="form-label">Password</label>
                     <input type="password" id="password" name="password" class="form-input" placeholder="Enter your password" required>
+                    <div class="error-message" id="password-error"></div>
                 </div>
                 
                 <div class="form-options">
@@ -295,48 +209,95 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Check for existing session
+            checkExistingSession();
+            
+            // Form submission
             document.getElementById('login-form').addEventListener('submit', function(e) {
                 e.preventDefault();
                 
+                // Clear previous errors
+                document.querySelectorAll('.error-message').forEach(el => {
+                    el.style.display = 'none';
+                });
+                
+                // Get form values
                 const email = document.getElementById('email').value.trim();
                 const password = document.getElementById('password').value;
                 const rememberMe = document.querySelector('input[name="remember"]').checked;
                 
+                // Basic validation
+                if (!email) {
+                    showError('email-error', 'Email is required');
+                    return;
+                }
+                
+                if (!password) {
+                    showError('password-error', 'Password is required');
+                    return;
+                }
+                
                 // Get registered users from localStorage
                 const users = JSON.parse(localStorage.getItem('infohive_users')) || [];
                 
-                // Find user with matching email and password
+                // Find matching user
                 const user = users.find(u => u.email === email && u.password === password);
                 
                 if (user) {
-                    // Create session
+                    // Create session data
                     const sessionData = {
                         email: user.email,
                         firstName: user.firstName,
                         lastName: user.lastName,
+                        userType: user.userType,
                         loggedInAt: new Date().toISOString()
                     };
                     
-                    // Save to localStorage
+                    // Save session to localStorage
                     localStorage.setItem('infohive_current_user', JSON.stringify(sessionData));
                     
+                    // Set remember me
                     if (rememberMe) {
-                        // Set a cookie for persistent login (7 days)
-                        document.cookie = `infohive_remember_me=true; max-age=${60 * 60 * 24 * 7}; path=/`;
+                        localStorage.setItem('infohive_remember_me', 'true');
+                    } else {
+                        localStorage.removeItem('infohive_remember_me');
                     }
                     
-                    // Redirect to dashboard
-                    window.location.href = 'student-dashboard.html';
+                    // Redirect based on user type
+                    redirectUser(user.userType);
                 } else {
-                    alert('Invalid email or password. Please try again.');
+                    showError('password-error', 'Invalid email or password');
                 }
             });
             
-            // Check for remember me cookie
-            if (document.cookie.includes('infohive_remember_me=true')) {
+            function checkExistingSession() {
+                const rememberMe = localStorage.getItem('infohive_remember_me') === 'true';
                 const userData = localStorage.getItem('infohive_current_user');
-                if (userData) {
-                    window.location.href = 'student-dashboard.html';
+                
+                if (rememberMe && userData) {
+                    const user = JSON.parse(userData);
+                    redirectUser(user.userType);
+                }
+            }
+            
+            function redirectUser(userType) {
+                switch(userType) {
+                    case 'student':
+                        window.location.href = 'student-dashboard.html';
+                        break;
+                    case 'teacher':
+                        window.location.href = 'teacher-dashboard.html';
+                        break;
+                    default:
+                        window.location.href = 'index.html';
+                }
+            }
+            
+            function showError(elementId, message) {
+                const errorElement = document.getElementById(elementId);
+                if (errorElement) {
+                    errorElement.textContent = message;
+                    errorElement.style.display = 'block';
                 }
             }
         });
