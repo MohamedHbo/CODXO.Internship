@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - InfoHive</title>
+    <meta name="description" content="Track your IT assessment progress and performance with InfoHive student dashboard.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <style>
+        .dashboard-container {
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+        
+        .dashboard-header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(255, 204, 0, 0.2);
+        }
+        
+        .welcome-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .welcome-text h1 {
+            color: #FFCC00;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .welcome-text p {
+            color: #e0e0e0;
+            font-size: 1.1rem;
+        }
+        
+        .quick-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .dashboard-content {
+            padding: 3rem 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .stat-card {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 204, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 204, 0, 0.2);
+            border-color: rgba(255, 204, 0, 0.4);
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #FFCC00, #FFD700);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #FFCC00;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #e0e0e0;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-change {
+            font-size: 0.9rem;
+            color: #4CAF50;
+        }
+        
+        .stat-change.negative {
+            color: #f44336;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .sidebar-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .section-card {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 204, 0, 0.2);
+        }
+        
+        .section-title {
+            color: #FFCC00;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .progress-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .progress-item:last-child {
+            border-bottom: none;
+        }
+        
+        .progress-info {
+            flex: 1;
+        }
+        
+        .progress-name {
+            color: #ffffff;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-bar-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #FFCC00, #FFD700);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-percentage {
+            color: #FFCC00;
+            font-weight: 600;
+            margin-left: 1rem;
+        }
+        
+        .recent-test {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .recent-test:hover {
+            background: rgba(255, 204, 0, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .test-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #FFCC00, #FFD700);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #000;
+        }
+        
+        .test-info {
+            flex: 1;
+        }
+        
+        .test-name {
+            color: #ffffff;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        
+        .test-date {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+        }
+        
+        .test-score {
+            color: #FFCC00;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .recommendation-card {
+            background: linear-gradient(135deg, rgba(255, 204, 0, 0.1), rgba(255, 204, 0, 0.05));
+            border: 1px solid rgba(255, 204, 0, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .recommendation-title {
+            color: #FFCC00;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .recommendation-text {
+            color: #e0e0e0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .achievement-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(45deg, #FFCC00, #FFD700);
+            color: #000;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 0.25rem;
+        }
+        
+        .chart-container {
+            height: 300px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #a0a0a0;
+            font-style: italic;
+        }
+        
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .welcome-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .welcome-text h1 {
+                font-size: 2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+            
+            .quick-actions {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="index.html" class="logo">
+                               <img src="images/3.png" style="width: 120px;">
+
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link" data-page="index">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="test-selection.html" class="nav-link">Tests</a></li>
+                <li><a href="profile.html" class="nav-link">Profile</a></li>
+                <li><a href="login.html" class="nav-link" >Logout</a></li>
+            </ul>
+            
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="dashboard-container">
+        <!-- Dashboard Header -->
+        <section class="dashboard-header">
+            <div class="container">
+                <div class="welcome-section">
+                    <div class="welcome-text">
+                        <h1>Welcome back, Student!</h1>
+                        <p>Continue your IT readiness journey and track your progress</p>
+                    </div>
+                    <div class="quick-actions">
+                        <a href="test-selection.html" class="btn btn-primary">Take New Test</a>
+                        <a href="#" class="btn btn-outline">View Results</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Content -->
+        <section class="dashboard-content">
+            <div class="container">
+                <!-- Statistics Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-icon">📚</span>
+                        <span class="stat-number">12</span>
+                        <div class="stat-label">Total Tests</div>
+                        <div class="stat-change">8 completed</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <span class="stat-icon">🎯</span>
+                        <span class="stat-number">85%</span>
+                        <div class="stat-label">Average Score</div>
+                        <div class="stat-change">+5% from last month</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <span class="stat-icon">⏱️</span>
+                        <span class="stat-number">24h</span>
+                        <div class="stat-label">Study Time</div>
+                        <div class="stat-change">This month</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <span class="stat-icon">🔥</span>
+                        <span class="stat-number">7 days</span>
+                        <div class="stat-label">Current Streak</div>
+                        <div class="stat-change">Keep it up!</div>
+                    </div>
+                </div>
+
+                <!-- Main Dashboard Grid -->
+                <div class="dashboard-grid">
+                    <!-- Main Content -->
+                    <div class="main-content">
+                        <!-- Subject Progress -->
+                        <div class="section-card">
+                            <h2 class="section-title">
+                                📊 Subject Progress
+                            </h2>
+                            <p style="color: #e0e0e0; margin-bottom: 2rem;">Your progress across different IT subjects</p>
+                            
+                            <div class="progress-item">
+                                <div class="progress-info">
+                                    <div class="progress-name">Programming</div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 85%"></div>
+                                    </div>
+                                    <div style="font-size: 0.9rem; color: #a0a0a0; margin-top: 0.25rem;">Last score: 92%</div>
+                                </div>
+                                <div class="progress-percentage">85%</div>
+                            </div>
+                            
+                            <div class="progress-item">
+                                <div class="progress-info">
+                                    <div class="progress-name">Networking</div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 72%"></div>
+                                    </div>
+                                    <div style="font-size: 0.9rem; color: #a0a0a0; margin-top: 0.25rem;">Last score: 78%</div>
+                                </div>
+                                <div class="progress-percentage">72%</div>
+                            </div>
+                            
+                            <div class="progress-item">
+                                <div class="progress-info">
+                                    <div class="progress-name">Database Management</div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 90%"></div>
+                                    </div>
+                                    <div style="font-size: 0.9rem; color: #a0a0a0; margin-top: 0.25rem;">Last score: 95%</div>
+                                </div>
+                                <div class="progress-percentage">90%</div>
+                            </div>
+                            
+                            <div class="progress-item">
+                                <div class="progress-info">
+                                    <div class="progress-name">Cybersecurity</div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 68%"></div>
+                                    </div>
+                                    <div style="font-size: 0.9rem; color: #a0a0a0; margin-top: 0.25rem;">Last score: 74%</div>
+                                </div>
+                                <div class="progress-percentage">68%</div>
+                            </div>
+                            
+                            <div class="progress-item">
+                                <div class="progress-info">
+                                    <div class="progress-name">Cloud Computing</div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 45%"></div>
+                                    </div>
+                                    <div style="font-size: 0.9rem; color: #a0a0a0; margin-top: 0.25rem;">Last score: 62%</div>
+                                </div>
+                                <div class="progress-percentage">45%</div>
+                            </div>
+                        </div>
+
+                        <!-- Performance Chart -->
+                        <div class="section-card">
+                            <h2 class="section-title">
+                                📈 Performance Trends
+                            </h2>
+                            <div class="chart-container">
+                                <div>Performance chart visualization would be displayed here</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar Content -->
+                    <div class="sidebar-content">
+                        <!-- Recent Tests -->
+                        <div class="section-card">
+                            <h2 class="section-title">
+                                🕒 Recent Tests
+                            </h2>
+                            
+                            <div class="recent-test">
+                                <div class="test-icon">💻</div>
+                                <div class="test-info">
+                                    <div class="test-name">Programming Fundamentals</div>
+                                    <div class="test-date">2 days ago</div>
+                                </div>
+                                <div class="test-score">92%</div>
+                            </div>
+                            
+                            <div class="recent-test">
+                                <div class="test-icon">🌐</div>
+                                <div class="test-info">
+                                    <div class="test-name">Network Security</div>
+                                    <div class="test-date">5 days ago</div>
+                                </div>
+                                <div class="test-score">78%</div>
+                            </div>
+                            
+                            <div class="recent-test">
+                                <div class="test-icon">🗄️</div>
+                                <div class="test-info">
+                                    <div class="test-name">SQL Basics</div>
+                                    <div class="test-date">1 week ago</div>
+                                </div>
+                                <div class="test-score">95%</div>
+                            </div>
+                            
+                            <a href="test-selection.html" class="btn btn-secondary" style="width: 100%; margin-top: 1rem;" data-page="test-selection">
+                                View All Tests
+                            </a>
+                        </div>
+
+                        <!-- Recommendations -->
+                        <div class="section-card">
+                            <h2 class="section-title">
+                                💡 Recommendations
+                            </h2>
+                            
+                            <div class="recommendation-card">
+                                <div class="recommendation-title">Focus on Cloud Computing</div>
+                                <div class="recommendation-text">
+                                    Your cloud computing score is below average. Consider taking the AWS Fundamentals practice test to improve.
+                                </div>
+                            </div>
+                            
+                            <div class="recommendation-card">
+                                <div class="recommendation-title">Strengthen Networking Skills</div>
+                                <div class="recommendation-text">
+                                    Review network protocols and security concepts. The CCNA practice tests could help boost your score.
+                                </div>
+                            </div>
+                            
+                            <div class="recommendation-card">
+                                <div class="recommendation-title">Maintain Programming Excellence</div>
+                                <div class="recommendation-text">
+                                    Great work on programming! Try advanced algorithms and data structures to challenge yourself further.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Achievements -->
+                        <div class="section-card">
+                            <h2 class="section-title">
+                                🏆 Recent Achievements
+                            </h2>
+                            
+                            <div style="margin-bottom: 1rem;">
+                                <div class="achievement-badge">
+                                    🎯 High Scorer
+                                </div>
+                                <div class="achievement-badge">
+                                    📚 Quick Learner
+                                </div>
+                                <div class="achievement-badge">
+                                    🔥 7-Day Streak
+                                </div>
+                                <div class="achievement-badge">
+                                    💻 Code Master
+                                </div>
+                            </div>
+                            
+                            <p style="color: #e0e0e0; font-size: 0.9rem; margin-top: 1rem;">
+                                Keep up the great work! Complete more assessments to unlock new achievements.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = localStorage.getItem('infohive_user');
+            const userType = localStorage.getItem('infohive_user_type');
+            
+            if (!user || userType !== 'student') {
+                InfoHive.showNotification('Please login as a student to access this page.', 'warning');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000);
+                return;
+            }
+            
+            // Update welcome message with user name
+            const userData = JSON.parse(user);
+            const welcomeText = document.querySelector('.welcome-text h1');
+            if (welcomeText && userData.name) {
+                welcomeText.textContent = `Welcome back, ${userData.name}!`;
+            }
+            
+            // Animate progress bars on load
+            setTimeout(() => {
+                const progressBars = document.querySelectorAll('.progress-bar');
+                progressBars.forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 100);
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Selection - InfoHive</title>
+    <meta name="description" content="Choose from various IT assessment tests to evaluate your skills and knowledge.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <style>
+        .test-selection-container {
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+        
+        .test-header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 3rem 0;
+            border-bottom: 1px solid rgba(255, 204, 0, 0.2);
+            text-align: center;
+        }
+        
+        .test-header h1 {
+            color: #FFCC00;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .test-header p {
+            color: #e0e0e0;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .test-content {
+            padding: 3rem 0;
+        }
+        
+        .filter-section {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 204, 0, 0.2);
+            margin-bottom: 3rem;
+        }
+        
+        .filter-title {
+            color: #FFCC00;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .filter-label {
+            color: #FFCC00;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .filter-select {
+            padding: 12px;
+            border: 2px solid rgba(255, 204, 0, 0.3);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-select:focus {
+            outline: none;
+            border-color: #FFCC00;
+            box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.1);
+        }
+        
+        .filter-select option {
+            background: #000;
+            color: #fff;
+        }
+        
+        .category-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .category-tab {
+            padding: 12px 24px;
+            border: 2px solid rgba(255, 204, 0, 0.3);
+            border-radius: 25px;
+            background: transparent;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        
+        .category-tab:hover,
+        .category-tab.active {
+            border-color: #FFCC00;
+            background: rgba(255, 204, 0, 0.2);
+            color: #FFCC00;
+            transform: translateY(-2px);
+        }
+        
+        .tests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .test-card {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 204, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .test-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 204, 0, 0.2);
+            border-color: rgba(255, 204, 0, 0.4);
+        }
+        
+        .test-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #FFCC00, #FFD700);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .test-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .test-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #FFCC00, #FFD700);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #000;
+            margin-bottom: 1.5rem;
+        }
+        
+        .test-title {
+            color: #FFCC00;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .test-description {
+            color: #e0e0e0;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .test-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .test-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #a0a0a0;
+        }
+        
+        .test-difficulty {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .difficulty-beginner {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+            border: 1px solid #4CAF50;
+        }
+        
+        .difficulty-intermediate {
+            background: rgba(255, 152, 0, 0.2);
+            color: #ff9800;
+            border: 1px solid #ff9800;
+        }
+        
+        .difficulty-advanced {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+            border: 1px solid #f44336;
+        }
+        
+        .test-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        .test-stat {
+            text-align: center;
+        }
+        
+        .test-stat-number {
+            color: #FFCC00;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: block;
+        }
+        
+        .test-stat-label {
+            color: #a0a0a0;
+            font-size: 0.8rem;
+        }
+        
+        .test-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .test-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .test-btn-primary {
+            background: linear-gradient(45deg, #FFCC00, #FFD700);
+            color: #000000;
+        }
+        
+        .test-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 204, 0, 0.4);
+        }
+        
+        .test-btn-secondary {
+            background: transparent;
+            color: #FFCC00;
+            border: 2px solid #FFCC00;
+        }
+        
+        .test-btn-secondary:hover {
+            background: rgba(255, 204, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .no-tests {
+            text-align: center;
+            padding: 3rem;
+            color: #a0a0a0;
+        }
+        
+        .no-tests-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .test-header h1 {
+                font-size: 2rem;
+            }
+            
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .tests-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .test-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="index.html" class="logo">
+                                             <img src="images/3.png" style="width: 120px;">
+
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="student-dashboard.html" class="nav-link">Home</a></li>
+                <li><a href="test-selection.html" class="nav-link active">Tests</a></li>
+                <li><a href="results.html" class="nav-link">Results</a></li>
+                <li><a href="profile.html" class="nav-link">Profile</a></li>
+                <li><a href="index.html" class="nav-link">Logout</a></li>
+            </ul>
+            
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="test-selection-container">
+        <!-- Test Header -->
+        <section class="test-header">
+            <div class="container">
+                <h1>Choose Your Assessment</h1>
+                <p>Select from our comprehensive range of IT assessments designed to evaluate your skills and knowledge across various domains</p>
+            </div>
+        </section>
+
+        <!-- Test Content -->
+        <section class="test-content">
+            <div class="container">
+                <!-- Filters -->
+                <div class="filter-section">
+                    <h2 class="filter-title">🔍 Filter Tests</h2>
+                    <div class="filter-grid">
+                        <div class="filter-group">
+                            <label class="filter-label">Difficulty Level</label>
+                            <select class="filter-select" id="difficulty-filter">
+                                <option value="">All Levels</option>
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">Duration</label>
+                            <select class="filter-select" id="duration-filter">
+                                <option value="">Any Duration</option>
+                                <option value="short">15-30 minutes</option>
+                                <option value="medium">30-60 minutes</option>
+                                <option value="long">60+ minutes</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">Question Count</label>
+                            <select class="filter-select" id="questions-filter">
+                                <option value="">Any Count</option>
+                                <option value="few">10-20 questions</option>
+                                <option value="medium">20-50 questions</option>
+                                <option value="many">50+ questions</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">Sort By</label>
+                            <select class="filter-select" id="sort-filter">
+                                <option value="popular">Most Popular</option>
+                                <option value="newest">Newest First</option>
+                                <option value="difficulty">Difficulty</option>
+                                <option value="duration">Duration</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category Tabs -->
+                <div class="category-tabs">
+                    <a href="#" class="category-tab active" data-category="all">All Tests</a>
+                    <a href="#" class="category-tab" data-category="programming">Programming</a>
+                    <a href="#" class="category-tab" data-category="networking">Networking</a>
+                    <a href="#" class="category-tab" data-category="database">Database</a>
+                    <a href="#" class="category-tab" data-category="security">Security</a>
+                    <a href="#" class="category-tab" data-category="cloud">Cloud</a>
+                    <a href="#" class="category-tab" data-category="devops">DevOps</a>
+                </div>
+
+                <!-- Tests Grid -->
+                <div class="tests-grid" id="tests-container">
+                    <!-- Programming Tests -->
+                    <div class="test-card" data-category="programming" data-difficulty="beginner" data-duration="medium">
+                        <div class="test-icon">💻</div>
+                        <h3 class="test-title">Programming Fundamentals</h3>
+                        <p class="test-description">
+                            Test your understanding of basic programming concepts including variables, 
+                            data types, control structures, and fundamental algorithms.
+                        </p>
+                        <div class="test-meta">
+                            <div class="test-meta-item">
+                                <span>⏱️</span>
+                                <span>30 minutes</span>
+                            </div>
+                            <div class="test-meta-item">
+                                <span>❓</span>
+                                <span>25 questions</span>
+                            </div>
+                            <div class="test-difficulty difficulty-beginner">Beginner</div>
+                        </div>
+                        <div class="test-stats">
+                            <div class="test-stat">
+                                <span class="test-stat-number">4.8</span>
+                                <span class="test-stat-label">Rating</span>
+                            </div>
+                            <div class="test-stat">
+                                <span class="test-stat-number">1,247</span>
+                                <span class="test-stat-label">Taken</span>
+                            </div>
+                            <div class="test-stat">
+                                <span class="test-stat-number">78%</span>
+                                <span class="test-stat-label">Pass Rate</span>
+                            </div>
+                        </div>
+                        <div class="test-actions">
+                            <a href="test-interface.html" class="test-btn test-btn-primary" >
+                                ▶ Start Test
+                            </a>
+                            <a href="#" class="test-btn test-btn-secondary">
+                                📊 Preview
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Networking Test -->
+                    <div class="test-card" data-category="networking" data-difficulty="intermediate" data-duration="medium">
+                        <div class="test-icon">🌐</div>
+                        <h3 class="test-title">Network Security Essentials</h3>
+                        <p class="test-description">
+                            Evaluate your knowledge of network security principles, protocols, 
+                            firewalls, and cybersecurity best practices.
+                        </p>
+                        <div class="test-meta">
+                            <div class="test-meta-item">
+                                <span>⏱️</span>
+                                <span>45 minutes</span>
+                            </div>
+                            <div class="test-meta-item">
+                                <span>❓</span>
+                                <span>35 questions</span>
+                            </div>
+                            <div class="test-difficulty difficulty-intermediate">Intermediate</div>
+                        </div>
+                        <div class="test-stats">
+                            <div class="test-stat">
+                                <span class="test-stat-number">4.6</span>
+                                <span class="test-stat-label">Rating</span>
+                            </div>
+                            <div class="test-stat">
+                                <span class="test-stat-number">892</span>
+                                <span class="test-stat-label">Taken</span>
+                            </div>
+                            <div class="test-stat">
+                                <span class="test-stat-number">65%</span>
+                                <span class="test-stat-label">Pass Rate</span>
+                            </div>
+                        </div>
+                        <div class="test-actions">
+                            <a href="test-interface.html" class="test-btn test-btn-primary"  data-test-id="network-security">
+                                ▶ Start Test
+                            </a>
+                            <a href="#" class="test-btn test-btn-secondary">
+                                📊 Preview
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Database Test -->
+                    <div class="test-card" data-category="database" data-difficulty="intermediate" data-duration="long">
+                        <div class="test-icon">🗄️</div>
+                        <h3 class="test-title">SQL Database Management</h3>
+                        <p class="test-description">
+                            Comprehensive assessment of SQL skills including queries, joins, 
+                            database design, and optimization techniques.
+                        </p>
+                        <div class="test-meta">
+                            <div class="test-meta-item">
+                                <span>⏱️</span>
+                                <span>60 minutes</span>
+                            </div>
+                            <div class="test-meta-item">
+                                <span>❓</span>
+                                <span>40 questions</span>
+                            </div>
+                            <div class="test-difficulty difficulty-intermediate">Intermediate</div>
+                        </div>
+                        <div class="test-stats">
+                            <div class="test-stat">
+                                <span class="test-stat-number">4.7</span>
+                                <span class="test-stat-label">Rating</span>
+                            </div>
+                            <div class="test-stat">
+                                <span class="test-stat-number">1,156</span>
+                                <span class="test-stat-label">Taken</span>
+                            </div>
+                            <div class="test-stat">
+                                <span class="test-stat-number">72%</span>
+                                <span class="test-stat-label">Pass Rate</span>
+                            </div>
+                        </div>
+                        <div class="test-actions">
+                            <a href="test-interface.html" class="test-btn test-btn-primary"  data-test-id="sql-database">
+                                ▶ Start Test
+                            </a>
+                            <a href="#" class="test-btn test-btn-secondary">
+                                📊 Preview
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Cloud Computing Test -->
+                    <div class="test-card" data-category="cloud" data-difficulty="advanced" data-duration="long">
+                        <div class="test-icon">☁️</div>
+                        <h3 class="test-title">Cloud Computing Fundamentals</h3>
+                        <p class="test-description">
+                            Test your understanding of cloud platforms, services, deployment models, 
+                            and modern cloud architecture patterns.
+                        </p>
+                        <div class="test-meta">
+                            <div class="test-meta-item">
+                                <span>⏱️</span>
+                                <span>75 minutes</span>
+                            </div>
+                            <div class="test-meta-item">
+                                <span>❓</span>
+                                <span>50 questions</span>
+                            </div>
+                            <div class="test-difficulty difficulty-advanced">Advanced</div>
+                        </div>
+                        <div class="test-stats">
+                            <div class="test-stat">
+                                <span class="test-stat-number">4.5</span>
+                                <span class="test-stat-label">Rating</span>
+                            </div>
+                            <div class="test-stat">
+                                <span class="test-stat-number">634</span>
+                                <span class="test-stat-label">Taken</span>
+                            </div>
+                            <div class="test-stat">
+                                <span class="test-stat-number">58%</span>
+                                <span class="test-stat-label">Pass Rate</span>
+                            </div>
+                        </div>
+                        <div class="test-actions">
+                            <a href="test-interface.html" class="test-btn test-btn-primary"  data-test-id="cloud-computing">
+                                ▶ Start Test
+                            </a>
+                            <a href="#" class="test-btn test-btn-secondary">
+                                📊 Preview
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Cybersecurity Test -->
+                    <div class="test-card" data-category="security" data-difficulty="advanced" data-duration="medium">
+                        <div class="test-icon">🔒</div>
+                        <h3 class="test-title">Cybersecurity Principles</h3>
+                        <p class="test-description">
+                            Advanced assessment covering threat analysis, risk management, 
+                            encryption, and security frameworks.
+                        </p>
+                        <div class="test-meta">
+                            <div class="test-meta-item">
+                                <span>⏱️</span>
+                                <span>50 minutes</span>
+                            </div>
+                            <div class="test-meta-item">
+                                <span>❓</span>
+                                <span>30 questions</span>
+                            </div>
+                            <div class="test-difficulty difficulty-advanced">Advanced</div>
+                        </div>
+                        <div class="test-stats">
+                            <div class="test-stat">
+                                <span class="test-stat-number">4.9</span>
+                                <span class="test-stat-label">Rating</span>
+                            </div>
+                            <div class="test-stat">
+                                <span class="test-stat-number">789</span>
+                                <span class="test-stat-label">Taken</span>
+                            </div>
+                            <div class="test-stat">
+                                <span class="test-stat-number">52%</span>
+                                <span class="test-stat-label">Pass Rate</span>
+                            </div>
+                        </div>
+                        <div class="test-actions">
+                            <a href="test-interface.html" class="test-btn test-btn-primary"  data-test-id="cybersecurity">
+                                ▶ Start Test
+                            </a>
+                            <a href="#" class="test-btn test-btn-secondary">
+                                📊 Preview
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- DevOps Test -->
+                    <div class="test-card" data-category="devops" data-difficulty="intermediate" data-duration="medium">
+                        <div class="test-icon">🔧</div>
+                        <h3 class="test-title">DevOps & CI/CD</h3>
+                        <p class="test-description">
+                            Evaluate your knowledge of DevOps practices, containerization, 
+                            CI/CD pipelines, and automation tools.
+                        </p>
+                        <div class="test-meta">
+                            <div class="test-meta-item">
+                                <span>⏱️</span>
+                                <span>40 minutes</span>
+                            </div>
+                            <div class="test-meta-item">
+                                <span>❓</span>
+                                <span>28 questions</span>
+                            </div>
+                            <div class="test-difficulty difficulty-intermediate">Intermediate</div>
+                        </div>
+                        <div class="test-stats">
+                            <div class="test-stat">
+                                <span class="test-stat-number">4.4</span>
+                                <span class="test-stat-label">Rating</span>
+                            </div>
+                            <div class="test-stat">
+                                <span class="test-stat-number">567</span>
+                                <span class="test-stat-label">Taken</span>
+                            </div>
+                            <div class="test-stat">
+                                <span class="test-stat-number">69%</span>
+                                <span class="test-stat-label">Pass Rate</span>
+                            </div>
+                        </div>
+                        <div class="test-actions">
+                            <a href="test-interface.html" class="test-btn test-btn-primary"  data-test-id="devops-cicd">
+                                ▶ Start Test
+                            </a>
+                            <a href="#" class="test-btn test-btn-secondary">
+                                📊 Preview
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- No Tests Message -->
+                <div class="no-tests" id="no-tests" style="display: none;">
+                    <span class="no-tests-icon">🔍</span>
+                    <h3>No tests found</h3>
+                    <p>Try adjusting your filters to see more tests</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Test filtering and category functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = localStorage.getItem('infohive_user');
+            const userType = localStorage.getItem('infohive_user_type');
+            
+            if (!user || userType !== 'student') {
+                InfoHive.showNotification('Please login as a student to access tests.', 'warning');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000);
+                return;
+            }
+            
+            const categoryTabs = document.querySelectorAll('.category-tab');
+            const testCards = document.querySelectorAll('.test-card');
+            const testsContainer = document.getElementById('tests-container');
+            const noTestsMessage = document.getElementById('no-tests');
+            
+            // Category filtering
+            categoryTabs.forEach(tab => {
+                tab.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Update active tab
+                    categoryTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const category = this.dataset.category;
+                    filterTests();
+                });
+            });
+            
+            // Filter change handlers
+            const filters = document.querySelectorAll('.filter-select');
+            filters.forEach(filter => {
+                filter.addEventListener('change', filterTests);
+            });
+            
+            function filterTests() {
+                const activeCategory = document.querySelector('.category-tab.active').dataset.category;
+                const difficultyFilter = document.getElementById('difficulty-filter').value;
+                const durationFilter = document.getElementById('duration-filter').value;
+                const questionsFilter = document.getElementById('questions-filter').value;
+                const sortFilter = document.getElementById('sort-filter').value;
+                
+                let visibleTests = 0;
+                
+                testCards.forEach(card => {
+                    let show = true;
+                    
+                    // Category filter
+                    if (activeCategory !== 'all' && card.dataset.category !== activeCategory) {
+                        show = false;
+                    }
+                    
+                    // Difficulty filter
+                    if (difficultyFilter && card.dataset.difficulty !== difficultyFilter) {
+                        show = false;
+                    }
+                    
+                    // Duration filter
+                    if (durationFilter && card.dataset.duration !== durationFilter) {
+                        show = false;
+                    }
+                    
+                    if (show) {
+                        card.style.display = 'block';
+                        visibleTests++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // Show/hide no tests message
+                if (visibleTests === 0) {
+                    noTestsMessage.style.display = 'block';
+                } else {
+                    noTestsMessage.style.display = 'none';
+                }
+                
+                // Apply sorting
+                if (sortFilter) {
+                    applySorting(sortFilter);
+                }
+            }
+            
+            function applySorting(sortBy) {
+                const visibleCards = Array.from(testCards).filter(card => card.style.display !== 'none');
+                
+                visibleCards.sort((a, b) => {
+                    switch (sortBy) {
+                        case 'difficulty':
+                            const difficultyOrder = { 'beginner': 1, 'intermediate': 2, 'advanced': 3 };
+                            return difficultyOrder[a.dataset.difficulty] - difficultyOrder[b.dataset.difficulty];
+                        case 'duration':
+                            const durationOrder = { 'short': 1, 'medium': 2, 'long': 3 };
+                            return durationOrder[a.dataset.duration] - durationOrder[b.dataset.duration];
+                        case 'newest':
+                            // For demo purposes, reverse the current order
+                            return -1;
+                        default: // popular
+                            return 0;
+                    }
+                });
+                
+                // Reorder the cards in the DOM
+                visibleCards.forEach(card => {
+                    testsContainer.appendChild(card);
+                });
+            }
+            
+            // Add hover effects to test cards
+            testCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(-10px)';
+                });
+            });
+            
+            // Initialize with all tests visible
+            filterTests();
+        });
+    </script>
+</body>
+</html>
+

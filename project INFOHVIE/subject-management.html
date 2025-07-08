@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subject Management - InfoHive</title>
+    <meta name="description" content="Manage IT subjects and courses with InfoHive subject management system.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <style>
+        .dashboard-container {
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+        
+        .dashboard-header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(255, 204, 0, 0.2);
+        }
+        
+        .welcome-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .welcome-text h1 {
+            color: #FFCC00;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .welcome-text p {
+            color: #e0e0e0;
+            font-size: 1.1rem;
+        }
+        
+        .quick-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .dashboard-content {
+            padding: 3rem 0;
+        }
+        
+        .subject-management-container {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 204, 0, 0.2);
+        }
+        
+        .search-add-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 3rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 204, 0, 0.3);
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #FFCC00;
+            box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.1);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 204, 0, 0.7);
+        }
+        
+        .subject-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .subject-card {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 204, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 204, 0, 0.1);
+            border-color: rgba(255, 204, 0, 0.4);
+        }
+        
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #FFCC00, #FFD700);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .subject-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .subject-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #FFCC00, #FFD700);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #000;
+            margin-bottom: 1rem;
+        }
+        
+        .subject-title {
+            color: #FFCC00;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subject-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #a0a0a0;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .subject-description {
+            color: #e0e0e0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+        
+        .subject-stats {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-item {
+            flex: 1;
+            text-align: center;
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .stat-number {
+            color: #FFCC00;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .stat-label {
+            color: #a0a0a0;
+            font-size: 0.8rem;
+        }
+        
+        .subject-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 204, 0, 0.1);
+            color: #FFCC00;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        
+        .action-btn:hover {
+            background: rgba(255, 204, 0, 0.2);
+        }
+        
+        .action-btn.delete {
+            background: rgba(244, 67, 54, 0.1);
+            color: #f44336;
+        }
+        
+        .action-btn.delete:hover {
+            background: rgba(244, 67, 54, 0.2);
+        }
+        
+        .add-subject-form {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 204, 0, 0.3);
+            max-width: 600px;
+            margin: 2rem auto;
+            display: none;
+        }
+        
+        .add-subject-form.active {
+            display: block;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .welcome-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .welcome-text h1 {
+                font-size: 2rem;
+            }
+            
+            .quick-actions {
+                justify-content: center;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .subject-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="index.html" class="logo">
+                <img src="images/3.png" style="width: 120px;">
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="teacher-dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="test-management.html" class="nav-link">Tests</a></li>
+                <li><a href="user-management.html" class="nav-link">Students</a></li>
+                <li><a href="subject-management.html" class="nav-link active">Subjects</a></li>
+                <li><a href="profile.html" class="nav-link">Profile</a></li>
+                <li><a href="login.html" class="nav-link">Logout</a></li>
+            </ul>
+            
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="dashboard-container">
+        <!-- Dashboard Header -->
+        <section class="dashboard-header">
+            <div class="container">
+                <div class="welcome-section">
+                    <div class="welcome-text">
+                        <h1>Subject Management</h1>
+                        <p>Manage all IT subjects and their course materials</p>
+                    </div>
+                    <div class="quick-actions">
+                        <button id="addSubjectBtn" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Add New Subject
+                        </button>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-book"></i> View Resources
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Content -->
+        <section class="dashboard-content">
+            <div class="container">
+                <div class="subject-management-container">
+                    <!-- Search and Add -->
+                    <div class="search-add-bar">
+                        <div class="search-box">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" class="search-input" placeholder="Search subjects...">
+                        </div>
+                        <div>
+                            <button class="btn btn-outline">
+                                <i class="fas fa-filter"></i> Filter
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Subjects Grid -->
+                    <div class="subject-cards">
+                        <!-- Subject Card 1 -->
+                        <div class="subject-card">
+                            <div class="subject-icon">
+                                <i class="fas fa-laptop-code"></i>
+                            </div>
+                            <h3 class="subject-title">Programming Fundamentals</h3>
+                            <div class="subject-meta">
+                                <span>Last updated: 2 days ago</span>
+                                <span>12 tests</span>
+                            </div>
+                            <p class="subject-description">
+                                Learn core programming concepts including variables, loops, functions and object-oriented programming.
+                            </p>
+                            <div class="subject-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">85%</div>
+                                    <div class="stat-label">Avg. Score</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">45</div>
+                                    <div class="stat-label">Students</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">8</div>
+                                    <div class="stat-label">Lessons</div>
+                                </div>
+                            </div>
+                            <div class="subject-actions">
+                                <button class="action-btn">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="action-btn">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="action-btn delete">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Subject Card 2 -->
+                        <div class="subject-card">
+                            <div class="subject-icon">
+                                <i class="fas fa-network-wired"></i>
+                            </div>
+                            <h3 class="subject-title">Computer Networking</h3>
+                            <div class="subject-meta">
+                                <span>Last updated: 1 week ago</span>
+                                <span>8 tests</span>
+                            </div>
+                            <p class="subject-description">
+                                Understand network architectures, protocols, and security fundamentals for modern IT infrastructure.
+                            </p>
+                            <div class="subject-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">78%</div>
+                                    <div class="stat-label">Avg. Score</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">38</div>
+                                    <div class="stat-label">Students</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">6</div>
+                                    <div class="stat-label">Lessons</div>
+                                </div>
+                            </div>
+                            <div class="subject-actions">
+                                <button class="action-btn">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="action-btn">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="action-btn delete">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Subject Card 3 -->
+                        <div class="subject-card">
+                            <div class="subject-icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <h3 class="subject-title">Database Systems</h3>
+                            <div class="subject-meta">
+                                <span>Last updated: 3 days ago</span>
+                                <span>10 tests</span>
+                            </div>
+                            <p class="subject-description">
+                                Master SQL queries, database design, normalization, and transaction management concepts.
+                            </p>
+                            <div class="subject-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">88%</div>
+                                    <div class="stat-label">Avg. Score</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">42</div>
+                                    <div class="stat-label">Students</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">7</div>
+                                    <div class="stat-label">Lessons</div>
+                                </div>
+                            </div>
+                            <div class="subject-actions">
+                                <button class="action-btn">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="action-btn">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="action-btn delete">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Subject Card 4 -->
+                        <div class="subject-card">
+                            <div class="subject-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3 class="subject-title">Information Security</h3>
+                            <div class="subject-meta">
+                                <span>Last updated: 5 days ago</span>
+                                <span>6 tests</span>
+                            </div>
+                            <p class="subject-description">
+                                Learn cybersecurity principles, encryption techniques, and security best practices.
+                            </p>
+                            <div class="subject-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">65%</div>
+                                    <div class="stat-label">Avg. Score</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">35</div>
+                                    <div class="stat-label">Students</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">5</div>
+                                    <div class="stat-label">Lessons</div>
+                                </div>
+                            </div>
+                            <div class="subject-actions">
+                                <button class="action-btn">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="action-btn">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="action-btn delete">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Subject Card 5 -->
+                        <div class="subject-card">
+                            <div class="subject-icon">
+                                <i class="fas fa-cloud"></i>
+                            </div>
+                            <h3 class="subject-title">Cloud Computing</h3>
+                            <div class="subject-meta">
+                                <span>Last updated: 2 weeks ago</span>
+                                <span>4 tests</span>
+                            </div>
+                            <p class="subject-description">
+                                Introduction to cloud services, deployment models, and virtualization technologies.
+                            </p>
+                            <div class="subject-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">58%</div>
+                                    <div class="stat-label">Avg. Score</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">28</div>
+                                    <div class="stat-label">Students</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">4</div>
+                                    <div class="stat-label">Lessons</div>
+                                </div>
+                            </div>
+                            <div class="subject-actions">
+                                <button class="action-btn">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="action-btn">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="action-btn delete">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Subject Card 6 -->
+                        <div class="subject-card">
+                            <div class="subject-icon">
+                                <i class="fas fa-desktop"></i>
+                            </div>
+                            <h3 class="subject-title">Operating Systems</h3>
+                            <div class="subject-meta">
+                                <span>Last updated: 1 day ago</span>
+                                <span>9 tests</span>
+                            </div>
+                            <p class="subject-description">
+                                Understand OS concepts including processes, memory management, and file systems.
+                            </p>
+                            <div class="subject-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">72%</div>
+                                    <div class="stat-label">Avg. Score</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">40</div>
+                                    <div class="stat-label">Students</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">6</div>
+                                    <div class="stat-label">Lessons</div>
+                                </div>
+                            </div>
+                            <div class="subject-actions">
+                                <button class="action-btn">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="action-btn">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="action-btn delete">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Add Subject Form (Hidden by default) -->
+                <div id="addSubjectForm" class="add-subject-form">
+                    <h2 style="color: #FFCC00; margin-bottom: 1.5rem;">Add New Subject</h2>
+                    
+                    <form id="newSubjectForm">
+                        <div class="form-group">
+                            <label for="subjectName" class="form-label">Subject Name</label>
+                            <input type="text" id="subjectName" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subjectIcon" class="form-label">Icon</label>
+                            <select id="subjectIcon" class="form-input" required>
+                                <option value="">Select an icon</option>
+                                <option value="fa-laptop-code">Programming</option>
+                                <option value="fa-network-wired">Networking</option>
+                                <option value="fa-database">Database</option>
+                                <option value="fa-shield-alt">Security</option>
+                                <option value="fa-cloud">Cloud</option>
+                                <option value="fa-desktop">OS</option>
+                                <option value="fa-mobile">Mobile</option>
+                                <option value="fa-code">Web Dev</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subjectDescription" class="form-label">Description</label>
+                            <textarea id="subjectDescription" class="form-input" rows="3" required></textarea>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="initialTests" class="form-label">Initial Tests</label>
+                                <input type="number" id="initialTests" class="form-input" min="0" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="initialLessons" class="form-label">Initial Lessons</label>
+                                <input type="number" id="initialLessons" class="form-input" min="0" value="0">
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem;">
+                            <button type="button" id="cancelAddSubject" class="btn btn-outline">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Add Subject</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in as teacher
+            const user = localStorage.getItem('infohive_user');
+            const userType = localStorage.getItem('infohive_user_type');
+            
+            if (!user || userType !== 'teacher') {
+                InfoHive.showNotification('Please login as a teacher to access this page.', 'warning');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000);
+                return;
+            }
+            
+            // Add subject form toggle
+            const addSubjectBtn = document.getElementById('addSubjectBtn');
+            const addSubjectForm = document.getElementById('addSubjectForm');
+            const cancelAddSubject = document.getElementById('cancelAddSubject');
+            
+            addSubjectBtn.addEventListener('click', function() {
+                addSubjectForm.classList.add('active');
+                window.scrollTo({
+                    top: addSubjectForm.offsetTop - 20,
+                    behavior: 'smooth'
+                });
+            });
+            
+            cancelAddSubject.addEventListener('click', function() {
+                addSubjectForm.classList.remove('active');
+            });
+            
+            // Form submission
+            const newSubjectForm = document.getElementById('newSubjectForm');
+            newSubjectForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Here you would normally send the data to your backend
+                // For now, we'll just show a success message
+                InfoHive.showNotification('Subject added successfully!', 'success');
+                addSubjectForm.classList.remove('active');
+                newSubjectForm.reset();
+                
+                // In a real app, you would refresh the subject list or add the new subject to the grid
+            });
+            
+            // Search functionality
+            const searchInput = document.querySelector('.search-input');
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const cards = document.querySelectorAll('.subject-card');
+                
+                cards.forEach(card => {
+                    const title = card.querySelector('.subject-title').textContent.toLowerCase();
+                    const description = card.querySelector('.subject-description').textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Delete buttons
+            document.querySelectorAll('.action-btn.delete').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (confirm('Are you sure you want to delete this subject? All related tests and materials will also be deleted.')) {
+                        const card = this.closest('.subject-card');
+                        card.style.opacity = '0.5';
+                        // Here you would normally send a delete request to your backend
+                        setTimeout(() => {
+                            card.remove();
+                            InfoHive.showNotification('Subject deleted successfully', 'success');
+                        }, 500);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
