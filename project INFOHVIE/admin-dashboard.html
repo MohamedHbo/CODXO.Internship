@@ -321,21 +321,18 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <nav class="nav container">
-            <a href="index.html" class="logo">
+            <a href="#" class="logo">
                               <img src="images/3.png" style="width: 120px;">
 
             </a>
             
             <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link" data-page="index">Home</a></li>
-                <li><a href="admin-dashboard.html" class="nav-link active" data-page="admin-dashboard">Dashboard</a></li>
-                <li><a href="#" class="nav-link">Users</a></li>
-                <li><a href="#" class="nav-link">Tests</a></li>
-                <li><a href="#" class="nav-link">Reports</a></li>
-                <li><a href="#" class="nav-link">Settings</a></li>
+                <li><a href="index.html" class="nav-link" >Home</a></li>
+                <li><a href="users.html" class="nav-link">Users</a></li>
+                <li><a href="reports.html" class="nav-link">Reports</a></li>
+                <li><a href="settings.html" class="nav-link">Settings</a></li>
                 <li><a href="admin-login.html" class="nav-link">Logout</a></li>
             </ul>
             
@@ -348,7 +345,6 @@
     </header>
 
     <div class="admin-dashboard">
-        <!-- Admin Header -->
         <section class="admin-header">
             <div class="container">
                 <div class="admin-welcome">
@@ -364,10 +360,8 @@
             </div>
         </section>
 
-        <!-- Admin Content -->
         <section class="admin-content">
             <div class="container">
-                <!-- Statistics Cards -->
                 <div class="admin-stats">
                     <div class="admin-stat-card">
                         <div class="stat-header">
@@ -406,7 +400,6 @@
                     </div>
                 </div>
 
-                <!-- Quick Actions -->
                 <div class="admin-section" style="margin-bottom: 2rem;">
                     <h2 class="section-title">⚡ Quick Actions</h2>
                     <div class="quick-action-grid">
@@ -436,7 +429,6 @@
                     </div>
                 </div>
 
-                <!-- Main Admin Grid -->
                 <div class="admin-grid">
                     <!-- Recent Users -->
                     <div class="admin-section">
@@ -495,7 +487,6 @@
                         </table>
                     </div>
 
-                    <!-- Test Management -->
                     <div class="admin-section">
                         <div class="section-header">
                             <h2 class="section-title">📝 Test Management</h2>
@@ -553,7 +544,6 @@
                     </div>
                 </div>
 
-                <!-- System Performance -->
                 <div class="admin-section">
                     <h2 class="section-title">📈 System Performance</h2>
                     <div class="admin-grid">
@@ -568,7 +558,6 @@
                     </div>
                 </div>
 
-                <!-- Recent Activity -->
                 <div class="admin-section">
                     <h2 class="section-title">🕒 Recent Activity</h2>
                     <div style="max-height: 300px; overflow-y: auto;">
@@ -619,7 +608,6 @@
 
     <script src="js/main.js"></script>
     <script>
-        // Check if user is logged in as admin
         document.addEventListener('DOMContentLoaded', function() {
             const user = localStorage.getItem('infohive_user');
             const userType = localStorage.getItem('infohive_user_type');
@@ -632,14 +620,12 @@
                 return;
             }
             
-            // Update welcome message with admin name
             const userData = JSON.parse(user);
             const adminTitle = document.querySelector('.admin-title h1');
             if (adminTitle && userData.name) {
                 adminTitle.textContent = `Welcome, ${userData.name}`;
             }
             
-            // Add click handlers for quick actions
             const quickActionCards = document.querySelectorAll('.quick-action-card');
             quickActionCards.forEach(card => {
                 card.addEventListener('click', function() {
@@ -648,7 +634,6 @@
                 });
             });
             
-            // Add click handlers for action buttons
             const actionButtons = document.querySelectorAll('.action-btn');
             actionButtons.forEach(button => {
                 button.addEventListener('click', function() {
