@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - InfoHive</title>
+    <meta name="description" content="Manage all users on the InfoHive platform.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <style>
+        .admin-dashboard {
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+        
+        .admin-header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(255, 204, 0, 0.2);
+        }
+        
+        .admin-welcome {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .admin-title h1 {
+            color: #FFCC00;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .admin-title p {
+            color: #e0e0e0;
+            font-size: 1.1rem;
+        }
+        
+        .admin-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .admin-content {
+            padding: 3rem 0;
+        }
+        
+        .admin-section {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 204, 0, 0.2);
+            margin-bottom: 2rem;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-title {
+            color: #FFCC00;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .data-table th {
+            color: #FFCC00;
+            font-weight: 600;
+            background: rgba(255, 204, 0, 0.1);
+        }
+        
+        .data-table td {
+            color: #e0e0e0;
+        }
+        
+        .data-table tr:hover {
+            background: rgba(255, 204, 0, 0.05);
+        }
+        
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-active {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+            border: 1px solid #4CAF50;
+        }
+        
+        .status-inactive {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+            border: 1px solid #f44336;
+        }
+        
+        .status-pending {
+            background: rgba(255, 152, 0, 0.2);
+            color: #ff9800;
+            border: 1px solid #ff9800;
+        }
+        
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 0 0.25rem;
+        }
+        
+        .action-btn.edit {
+            background: rgba(33, 150, 243, 0.2);
+            color: #2196F3;
+            border: 1px solid #2196F3;
+        }
+        
+        .action-btn.delete {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+            border: 1px solid #f44336;
+        }
+        
+        .action-btn.view {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+            border: 1px solid #4CAF50;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .search-filter {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+        
+        .page-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(255, 204, 0, 0.3);
+            background: transparent;
+            color: #e0e0e0;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .page-btn.active {
+            background: rgba(255, 204, 0, 0.2);
+            border-color: #FFCC00;
+            color: #FFCC00;
+        }
+        
+        .page-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        @media (max-width: 768px) {
+            .admin-welcome {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .admin-title h1 {
+                font-size: 2rem;
+            }
+            
+            .data-table {
+                font-size: 0.9rem;
+            }
+            
+            .data-table th,
+            .data-table td {
+                padding: 0.75rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <a href="#" class="logo">
+                <img src="images/3.png" style="width: 120px;">
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="admin-dashboard.html" class="nav-link">Home</a></li>
+                <li><a href="users.html" class="nav-link active">Users</a></li>
+                <li><a href="reports.html" class="nav-link">Reports</a></li>
+                <li><a href="settings.html" class="nav-link">Settings</a></li>
+                <li><a href="admin-login.html" class="nav-link">Logout</a></li>
+            </ul>
+            
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="admin-dashboard">
+        <section class="admin-header">
+            <div class="container">
+                <div class="admin-welcome">
+                    <div class="admin-title">
+                        <h1>User Management</h1>
+                        <p>Manage all users on the InfoHive platform</p>
+                    </div>
+                    <div class="admin-actions">
+                        <a href="#" class="btn btn-primary">Add New User</a>
+                        <a href="#" class="btn btn-outline">Export Users</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="admin-content">
+            <div class="container">
+                <div class="admin-section">
+                    <div class="search-filter">
+                        <div class="search-box">
+                            <input type="text" class="form-control" placeholder="Search users...">
+                        </div>
+                        <div class="filter-group">
+                            <select class="form-control">
+                                <option>All Roles</option>
+                                <option>Doctor</option>
+                                <option>Student</option>
+                                <option>Instructor</option>
+                            </select>
+                            <select class="form-control">
+                                <option>All Status</option>
+                                <option>Active</option>
+                                <option>Inactive</option>
+                                <option>Pending</option>
+                            </select>
+                            <button class="btn btn-secondary">Filter</button>
+                        </div>
+                    </div>
+                    
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Joined</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#1001</td>
+                                <td>John Smith</td>
+                                <td>john@example.com</td>
+                                <td>Student</td>
+                                <td>2023-05-15</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>
+                                    <button class="action-btn view">View</button>
+                                    <button class="action-btn edit">Edit</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#1002</td>
+                                <td>Sarah Johnson</td>
+                                <td>sarah@example.com</td>
+                                <td>Student</td>
+                                <td>2023-06-20</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>
+                                    <button class="action-btn view">View</button>
+                                    <button class="action-btn edit">Edit</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#1003</td>
+                                <td>Mike Chen</td>
+                                <td>mike@example.com</td>
+                                <td>Instructor</td>
+                                <td>2023-07-01</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>
+                                    <button class="action-btn view">View</button>
+                                    <button class="action-btn edit">Edit</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#1004</td>
+                                <td>Emily Davis</td>
+                                <td>emily@example.com</td>
+                                <td>Doctor</td>
+                                <td>2023-04-10</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>
+                                    <button class="action-btn view">View</button>
+                                    <button class="action-btn edit">Edit</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#1005</td>
+                                <td>Robert Wilson</td>
+                                <td>robert@example.com</td>
+                                <td>Student</td>
+                                <td>2023-08-05</td>
+                                <td><span class="status-badge status-inactive">Inactive</span></td>
+                                <td>
+                                    <button class="action-btn view">View</button>
+                                    <button class="action-btn delete">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="pagination">
+                        <button class="page-btn">Previous</button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn">Next</button>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title">👥 Bulk Actions</h2>
+                    </div>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <button class="btn btn-secondary">Import Users</button>
+                        <button class="btn btn-secondary">Send Email to Selected</button>
+                        <button class="btn btn-secondary">Export Selected</button>
+                        <button class="btn btn-outline">Reset Filters</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = localStorage.getItem('infohive_user');
+            const userType = localStorage.getItem('infohive_user_type');
+            
+            if (!user || userType !== 'admin') {
+                InfoHive.showNotification('Access denied. Admin privileges required.', 'error');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000);
+                return;
+            }
+            
+            const actionButtons = document.querySelectorAll('.action-btn');
+            actionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const action = this.textContent;
+                    InfoHive.showNotification(`${action} action triggered`, 'info');
+                });
+            });
+            
+            const pageButtons = document.querySelectorAll('.page-btn');
+            pageButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    if (!this.classList.contains('active')) {
+                        document.querySelector('.page-btn.active').classList.remove('active');
+                        this.classList.add('active');
+                        InfoHive.showNotification(`Loading page ${this.textContent}`, 'info');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

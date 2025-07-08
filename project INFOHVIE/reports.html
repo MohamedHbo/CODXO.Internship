@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports - InfoHive</title>
+    <meta name="description" content="View and generate reports for the InfoHive platform.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <style>
+        .admin-dashboard {
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+        
+        .admin-header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(255, 204, 0, 0.2);
+        }
+        
+        .admin-welcome {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .admin-title h1 {
+            color: #FFCC00;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .admin-title p {
+            color: #e0e0e0;
+            font-size: 1.1rem;
+        }
+        
+        .admin-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .admin-content {
+            padding: 3rem 0;
+        }
+        
+        .admin-section {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 204, 0, 0.2);
+            margin-bottom: 2rem;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-title {
+            color: #FFCC00;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .report-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .report-card {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 204, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .report-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 204, 0, 0.1);
+            border-color: rgba(255, 204, 0, 0.4);
+        }
+        
+        .report-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #FFCC00;
+        }
+        
+        .report-title {
+            color: #FFCC00;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .report-desc {
+            color: #e0e0e0;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .report-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .chart-placeholder {
+            height: 250px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #a0a0a0;
+            font-style: italic;
+            margin-top: 1rem;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .data-table th {
+            color: #FFCC00;
+            font-weight: 600;
+            background: rgba(255, 204, 0, 0.1);
+        }
+        
+        .data-table td {
+            color: #e0e0e0;
+        }
+        
+        .data-table tr:hover {
+            background: rgba(255, 204, 0, 0.05);
+        }
+        
+        @media (max-width: 768px) {
+            .admin-welcome {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .admin-title h1 {
+                font-size: 2rem;
+            }
+            
+            .report-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <a href="#" class="logo">
+                <img src="images/3.png" style="width: 120px;">
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="admin-dashboard.html" class="nav-link">Home</a></li>
+                <li><a href="users.html" class="nav-link">Users</a></li>
+                <li><a href="reports.html" class="nav-link active">Reports</a></li>
+                <li><a href="settings.html" class="nav-link">Settings</a></li>
+                <li><a href="admin-login.html" class="nav-link">Logout</a></li>
+            </ul>
+            
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="admin-dashboard">
+        <section class="admin-header">
+            <div class="container">
+                <div class="admin-welcome">
+                    <div class="admin-title">
+                        <h1>Reports</h1>
+                        <p>Generate and view detailed reports about platform usage</p>
+                    </div>
+                    <div class="admin-actions">
+                        <a href="#" class="btn btn-primary">Generate New Report</a>
+                        <a href="#" class="btn btn-outline">Export All</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="admin-content">
+            <div class="container">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title">📊 Quick Reports</h2>
+                        <div style="display: flex; gap: 1rem;">
+                            <select class="form-control">
+                                <option>Last 7 Days</option>
+                                <option>Last 30 Days</option>
+                                <option>Last 90 Days</option>
+                                <option>Custom Range</option>
+                            </select>
+                            <button class="btn btn-secondary">Apply</button>
+                        </div>
+                    </div>
+                    
+                    <div class="report-grid">
+                        <div class="report-card">
+                            <div class="report-icon">👥</div>
+                            <h3 class="report-title">User Activity</h3>
+                            <p class="report-desc">Detailed report of user logins, sessions, and activity patterns</p>
+                            <div class="chart-placeholder">User activity chart</div>
+                            <div class="report-actions">
+                                <button class="btn btn-secondary">View</button>
+                                <button class="btn btn-outline">Export</button>
+                            </div>
+                        </div>
+                        
+                        <div class="report-card">
+                            <div class="report-icon">📝</div>
+                            <h3 class="report-title">Test Performance</h3>
+                            <p class="report-desc">Average scores, completion rates, and question analysis</p>
+                            <div class="chart-placeholder">Test performance chart</div>
+                            <div class="report-actions">
+                                <button class="btn btn-secondary">View</button>
+                                <button class="btn btn-outline">Export</button>
+                            </div>
+                        </div>
+                        
+                        <div class="report-card">
+                            <div class="report-icon">📈</div>
+                            <h3 class="report-title">Growth Metrics</h3>
+                            <p class="report-desc">User growth, test creation, and platform adoption rates</p>
+                            <div class="chart-placeholder">Growth metrics chart</div>
+                            <div class="report-actions">
+                                <button class="btn btn-secondary">View</button>
+                                <button class="btn btn-outline">Export</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title">📋 Report History</h2>
+                        <input type="text" class="form-control" placeholder="Search reports..." style="min-width: 250px;">
+                    </div>
+                    
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Report Name</th>
+                                <th>Type</th>
+                                <th>Generated</th>
+                                <th>Size</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>User Activity - July 2023</td>
+                                <td>User Analytics</td>
+                                <td>2023-08-01</td>
+                                <td>2.4 MB</td>
+                                <td>
+                                    <button class="btn btn-secondary">View</button>
+                                    <button class="btn btn-outline">Download</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Test Performance - Q2 2023</td>
+                                <td>Test Analytics</td>
+                                <td>2023-07-15</td>
+                                <td>1.8 MB</td>
+                                <td>
+                                    <button class="btn btn-secondary">View</button>
+                                    <button class="btn btn-outline">Download</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>System Health - June 2023</td>
+                                <td>System</td>
+                                <td>2023-07-05</td>
+                                <td>3.2 MB</td>
+                                <td>
+                                    <button class="btn btn-secondary">View</button>
+                                    <button class="btn btn-outline">Download</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Financial Report - Q2 2023</td>
+                                <td>Financial</td>
+                                <td>2023-07-10</td>
+                                <td>4.1 MB</td>
+                                <td>
+                                    <button class="btn btn-secondary">View</button>
+                                    <button class="btn btn-outline">Download</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2 class="section-title">📅 Scheduled Reports</h2>
+                        <button class="btn btn-primary">Schedule New</button>
+                    </div>
+                    
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Report Name</th>
+                                <th>Frequency</th>
+                                <th>Next Run</th>
+                                <th>Recipients</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Weekly User Activity</td>
+                                <td>Weekly</td>
+                                <td>2023-08-14</td>
+                                <td>3 admins</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>
+                                    <button class="btn btn-secondary">Edit</button>
+                                    <button class="btn btn-outline">Disable</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Monthly Test Performance</td>
+                                <td>Monthly</td>
+                                <td>2023-09-01</td>
+                                <td>5 admins</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>
+                                    <button class="btn btn-secondary">Edit</button>
+                                    <button class="btn btn-outline">Disable</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Quarterly Financial</td>
+                                <td>Quarterly</td>
+                                <td>2023-10-01</td>
+                                <td>2 admins</td>
+                                <td><span class="status-badge status-inactive">Inactive</span></td>
+                                <td>
+                                    <button class="btn btn-secondary">Edit</button>
+                                    <button class="btn btn-outline">Enable</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = localStorage.getItem('infohive_user');
+            const userType = localStorage.getItem('infohive_user_type');
+            
+            if (!user || userType !== 'admin') {
+                InfoHive.showNotification('Access denied. Admin privileges required.', 'error');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000);
+                return;
+            }
+            
+            const reportCards = document.querySelectorAll('.report-card');
+            reportCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if (!e.target.classList.contains('btn')) {
+                        const title = this.querySelector('.report-title').textContent;
+                        InfoHive.showNotification(`Loading ${title} report`, 'info');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
