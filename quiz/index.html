@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مسابقة الأسئلة التفاعلية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #4ECDC4;
+        }
+        
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            background: linear-gradient(to right, #FF512F, #DD2476);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to right, #DD2476, #FF512F);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .screen {
+            display: none;
+        }
+        
+        #start-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo {
+            font-size: 5rem;
+            color: #FFD700;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin: 20px 0;
+            width: 100%;
+        }
+        
+        .option {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 15px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: right;
+        }
+        
+        .option:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+        
+        .correct {
+            background: linear-gradient(to right, #00b09b, #96c93d);
+            border-color: #00b09b;
+            color: white;
+        }
+        
+        .incorrect {
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            border-color: #ff416c;
+            color: white;
+        }
+        
+        .progress-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            height: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            border-radius: 10px;
+            width: 5%;
+            transition: width 0.5s ease;
+        }
+        
+        .score-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin: 20px 0;
+            font-size: 1.2rem;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 15px;
+        }
+        
+        .score-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .score-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #FFD700;
+        }
+        
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            display: none;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #f00;
+            opacity: 0.8;
+        }
+        
+        .result-screen {
+            text-align: center;
+        }
+        
+        .result-icon {
+            font-size: 5rem;
+            color: #FFD700;
+            margin: 20px 0;
+        }
+        
+        .final-score {
+            font-size: 3rem;
+            color: #4ECDC4;
+            margin: 20px 0;
+            text-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                border-radius: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .btn {
+                padding: 12px 30px;
+                font-size: 1.1rem;
+            }
+            
+            .option {
+                padding: 12px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- شاشة البداية -->
+        <div id="start-screen" class="screen">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+            </div>
+            <h1>مسابقة الأسئلة التفاعلية</h1>
+            <p>اختبار معلومات عامة مكون من 20 سؤالًا. احصل على نقاط عن كل إجابة صحيحة وستفقد نقاطًا عند الإجابة الخاطئة!</p>
+            <button id="start-btn" class="btn">ابدأ الآن <i class="fas fa-play"></i></button>
+        </div>
+        
+        <!-- شاشة الأسئلة -->
+        <div id="question-screen" class="screen">
+            <h2 id="question-number">السؤال 1 من 20</h2>
+            <div class="progress-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+            <div class="score-container">
+                <div class="score-item">
+                    <span>النقاط</span>
+                    <span id="score" class="score-value">0</span>
+                </div>
+                <div class="score-item">
+                    <span>السؤال</span>
+                    <span id="current-question" class="score-value">1/20</span>
+                </div>
+            </div>
+            <h2 id="question-text">ما هو أصغر كوكب في النظام الشمسي؟</h2>
+            <div class="options-container" id="options-container">
+                <!-- سيتم إضافة الخيارات ديناميكيًا -->
+            </div>
+            <div id="feedback" style="margin: 20px 0; font-size: 1.2rem; min-height: 30px;"></div>
+            <button id="next-btn" class="btn" style="display: none;">السؤال التالي <i class="fas fa-arrow-left"></i></button>
+        </div>
+        
+        <!-- شاشة النتائج -->
+        <div id="result-screen" class="screen">
+            <div class="logo">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <h1>تهانينا! لقد أكملت الاختبار</h1>
+            <div class="final-score">نقاطك: <span id="final-score">0</span></div>
+            <p id="result-message">أداء رائع! لديك معرفة واسعة.</p>
+            <button id="restart-btn" class="btn">اللعب مرة أخرى <i class="fas fa-redo"></i></button>
+        </div>
+    </div>
+    
+    <!-- تأثيرات الاحتفال -->
+    <div id="celebration" class="celebration"></div>
+
+    <script>
+        // الأسئلة والمعلومات
+        const questions = [
+            {
+                question: "ما هو أصغر كوكب في النظام الشمسي؟",
+                options: ["عطارد", "الزهرة", "المريخ", "الأرض"],
+                answer: 0
+            },
+            {
+                question: "ما هي عاصمة أستراليا؟",
+                options: ["سيدني", "ملبورن", "كانبرا", "بريزبان"],
+                answer: 2
+            },
+            {
+                question: "كم عدد عناصر الجدول الدوري القياسي؟",
+                options: ["108", "118", "128", "138"],
+                answer: 1
+            },
+            {
+                question: "ما هو أطول نهر في العالم؟",
+                options: ["نهر النيل", "نهر الأمازون", "نهر المسيسيبي", "نهر اليانغتسي"],
+                answer: 1
+            },
+            {
+                question: "في أي عام بدأت الحرب العالمية الأولى؟",
+                options: ["1914", "1916", "1918", "1939"],
+                answer: 0
+            },
+            {
+                question: "ما هو العنصر الكيميائي الذي رمزه 'Au'؟",
+                options: ["فضة", "حديد", "ذهب", "نحاس"],
+                answer: 2
+            },
+            {
+                question: "ما هو أسرع حيوان بري؟",
+                options: ["الفهد", "الأسد", "النمر", "الظبي"],
+                answer: 0
+            },
+            {
+                question: "ما هو أعمق محيط في العالم؟",
+                options: ["المحيط الأطلسي", "المحيط الهندي", "المحيط الهادئ", "المحيط المتجمد الشمالي"],
+                answer: 2
+            },
+            {
+                question: "من رسم لوحة 'ليلة مرصعة بالنجوم'؟",
+                options: ["بابلو بيكاسو", "فينسنت فان غوخ", "ليوناردو دا فينشي", "كلود مونيه"],
+                answer: 1
+            },
+            {
+                question: "ما هو أكبر محيط في العالم؟",
+                options: ["المحيط الأطلسي", "المحيط الهندي", "المحيط الهادئ", "المحيط المتجمد الجنوبي"],
+                answer: 2
+            },
+            {
+                question: "ما هو المعدن السائل في درجة حرارة الغرفة؟",
+                options: ["الزئبق", "الرصاص", "النحاس", "القصدير"],
+                answer: 0
+            },
+            {
+                question: "ما هي أصغر قارة في العالم؟",
+                options: ["أوروبا", "أفريقيا", "أستراليا", "أنتاركتيكا"],
+                answer: 2
+            },
+            {
+                question: "من هو مؤلف كتاب 'الأمير'؟",
+                options: ["نيكولو مكيافيلي", "أفلاطون", "أرسطو", "توماس هوبز"],
+                answer: 0
+            },
+            {
+                question: "ما هو أطول جبل في العالم؟",
+                options: ["كيلimanjaro", "إفرست", "K2", "ماترهورن"],
+                answer: 1
+            },
+            {
+                question: "ما هو الغاز الأكثر وفرة في الغلاف الجوي للأرض؟",
+                options: ["الأكسجين", "الهيدروجين", "ثاني أكسيد الكربون", "النيتروجين"],
+                answer: 3
+            },
+            {
+                question: "من اكتشف الجاذبية؟",
+                options: ["ألبرت أينشتاين", "إسحاق نيوتن", "غاليليو غاليلي", "نيكولا تسلا"],
+                answer: 1
+            },
+            {
+                question: "ما هي اللغة الأكثر تحدثًا في العالم؟",
+                options: ["الإنجليزية", "الإسبانية", "المندرين", "الهندية"],
+                answer: 2
+            },
+            {
+                question: "كم عدد الأضلاع في جسم الإنسان؟",
+                options: ["12 زوجًا", "10 أزواج", "14 زوجًا", "16 زوجًا"],
+                answer: 0
+            },
+            {
+                question: "ما هو أسرع حيوان بحري؟",
+                options: ["الدلفين", "سمكة أبو سيف", "سمك التونة", "القرش"],
+                answer: 1
+            },
+            {
+                question: "ما هو أقدم خط للأنهار في العالم؟",
+                options: ["نهر النيل", "نهر الأمازون", "نهر المسيسيبي", "نهر الفرات"],
+                answer: 0
+            }
+        ];
+
+        // عناصر DOM
+        const startScreen = document.getElementById('start-screen');
+        const questionScreen = document.getElementById('question-screen');
+        const resultScreen = document.getElementById('result-screen');
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const questionNumber = document.getElementById('question-number');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const progressBar = document.getElementById('progress-bar');
+        const scoreElement = document.getElementById('score');
+        const currentQuestionElement = document.getElementById('current-question');
+        const finalScoreElement = document.getElementById('final-score');
+        const resultMessageElement = document.getElementById('result-message');
+        const feedbackElement = document.getElementById('feedback');
+        const celebrationElement = document.getElementById('celebration');
+
+        // متغيرات اللعبة
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+
+        // بدء اللعبة
+        startBtn.addEventListener('click', startGame);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', restartGame);
+
+        function startGame() {
+            startScreen.style.display = 'none';
+            questionScreen.style.display = 'block';
+            currentQuestionIndex = 0;
+            score = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            answered = false;
+            nextBtn.style.display = 'none';
+            feedbackElement.textContent = '';
+            
+            const question = questions[currentQuestionIndex];
+            questionNumber.textContent = `السؤال ${currentQuestionIndex + 1} من ${questions.length}`;
+            questionText.textContent = question.question;
+            progressBar.style.width = `${((currentQuestionIndex + 1) / questions.length) * 100}%`;
+            currentQuestionElement.textContent = `${currentQuestionIndex + 1}/${questions.length}`;
+            scoreElement.textContent = score;
+            
+            // إضافة الخيارات
+            optionsContainer.innerHTML = '';
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.classList.add('option');
+                optionElement.textContent = option;
+                optionElement.addEventListener('click', () => checkAnswer(index));
+                optionsContainer.appendChild(optionElement);
+            });
+        }
+
+        function checkAnswer(selectedIndex) {
+            if (answered) return;
+            
+            answered = true;
+            const question = questions[currentQuestionIndex];
+            const options = optionsContainer.querySelectorAll('.option');
+            
+            if (selectedIndex === question.answer) {
+                // الإجابة الصحيحة
+                options[selectedIndex].classList.add('correct');
+                score += 10;
+                scoreElement.textContent = score;
+                feedbackElement.textContent = 'إجابة صحيحة! +10 نقاط';
+                feedbackElement.style.color = '#00b09b';
+                createConfetti();
+            } else {
+                // الإجابة الخاطئة
+                options[selectedIndex].classList.add('incorrect');
+                options[question.answer].classList.add('correct');
+                score = Math.max(0, score - 5);
+                scoreElement.textContent = score;
+                feedbackElement.textContent = `إجابة خاطئة! الإجابة الصحيحة هي: ${question.options[question.answer]}`;
+                feedbackElement.style.color = '#ff416c';
+            }
+            
+            nextBtn.style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            questionScreen.style.display = 'none';
+            resultScreen.style.display = 'block';
+            finalScoreElement.textContent = score;
+            
+            if (score >= 180) {
+                resultMessageElement.textContent = 'مذهل! أنت عبقرية بلا شك!';
+            } else if (score >= 150) {
+                resultMessageElement.textContent = 'رائع! لديك معرفة واسعة!';
+            } else if (score >= 100) {
+                resultMessageElement.textContent = 'جيد جدًا! لديك معرفة جيدة.';
+            } else if (score >= 50) {
+                resultMessageElement.textContent = 'ليس سيئًا! يمكنك تحسين معرفتك.';
+            } else {
+                resultMessageElement.textContent = 'ربما تحتاج إلى دراسة أكثر!';
+            }
+            
+            createConfetti();
+        }
+
+        function restartGame() {
+            resultScreen.style.display = 'none';
+            startScreen.style.display = 'flex';
+        }
+
+        // تأثيرات الاحتفال
+        function createConfetti() {
+            celebrationElement.style.display = 'block';
+            celebrationElement.innerHTML = '';
+            
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-10px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 15 + 5 + 'px';
+                confetti.style.height = Math.random() * 15 + 5 + 'px';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                
+                const animation = confetti.animate([
+                    { top: '-10px', transform: 'rotate(0deg)' },
+                    { top: '100vh', transform: 'rotate(720deg)' }
+                ], {
+                    duration: Math.random() * 3000 + 2000,
+                    easing: 'cubic-bezier(0.1, 0.2, 0.8, 0.9)'
+                });
+                
+                celebrationElement.appendChild(confetti);
+                
+                animation.onfinish = () => {
+                    confetti.remove();
+                };
+            }
+            
+            setTimeout(() => {
+                celebrationElement.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
