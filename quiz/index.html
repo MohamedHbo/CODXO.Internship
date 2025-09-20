@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مسابقة الأسئلة التفاعلية</title>
+    <title>منصة الاختبارات التفاعلية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -13,11 +13,21 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
+        :root {
+            --primary: #1a2a6c;
+            --secondary: #b21f1f;
+            --accent: #fdbb2d;
+            --success: #00b09b;
+            --danger: #ff416c;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        
         body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
-            color: #fff;
+            color: var(--light);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -34,7 +44,7 @@
         
         .container {
             width: 100%;
-            max-width: 800px;
+            max-width: 900px;
             background: rgba(0, 0, 0, 0.7);
             border-radius: 20px;
             padding: 30px;
@@ -47,7 +57,7 @@
         h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
-            color: #FFD700;
+            color: var(--accent);
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
         
@@ -55,6 +65,12 @@
             font-size: 1.8rem;
             margin-bottom: 15px;
             color: #4ECDC4;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin: 15px 0;
+            color: var(--accent);
         }
         
         p {
@@ -86,6 +102,11 @@
             transform: translateY(1px);
         }
         
+        .btn-sm {
+            padding: 10px 20px;
+            font-size: 1rem;
+        }
+        
         .screen {
             display: none;
         }
@@ -99,7 +120,7 @@
         
         .logo {
             font-size: 5rem;
-            color: #FFD700;
+            color: var(--accent);
             margin-bottom: 30px;
             text-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
             animation: pulse 2s infinite;
@@ -136,14 +157,14 @@
         }
         
         .correct {
-            background: linear-gradient(to right, #00b09b, #96c93d);
-            border-color: #00b09b;
+            background: linear-gradient(to right, var(--success), #96c93d);
+            border-color: var(--success);
             color: white;
         }
         
         .incorrect {
-            background: linear-gradient(to right, #ff416c, #ff4b2b);
-            border-color: #ff416c;
+            background: linear-gradient(to right, var(--danger), #ff4b2b);
+            border-color: var(--danger);
             color: white;
         }
         
@@ -183,7 +204,7 @@
         .score-value {
             font-size: 1.5rem;
             font-weight: bold;
-            color: #FFD700;
+            color: var(--accent);
         }
         
         .celebration {
@@ -211,7 +232,7 @@
         
         .result-icon {
             font-size: 5rem;
-            color: #FFD700;
+            color: var(--accent);
             margin: 20px 0;
         }
         
@@ -220,6 +241,101 @@
             color: #4ECDC4;
             margin: 20px 0;
             text-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            font-size: 1.1rem;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .add-option-btn {
+            background: linear-gradient(to right, var(--primary), #2a3a8c);
+            margin: 10px 0;
+        }
+        
+        .add-option-btn:hover {
+            background: linear-gradient(to right, #2a3a8c, var(--primary));
+        }
+        
+        .option-input-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .option-input {
+            flex: 1;
+            margin-left: 10px;
+        }
+        
+        .remove-option {
+            color: var(--danger);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .correct-answer-select {
+            margin-top: 10px;
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .leaderboard {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        
+        .leaderboard th, .leaderboard td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .leaderboard th {
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--accent);
+        }
+        
+        .leaderboard tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            background: var(--accent);
+            color: var(--dark);
         }
         
         @media (max-width: 768px) {
@@ -255,9 +371,11 @@
             <div class="logo">
                 <i class="fas fa-brain"></i>
             </div>
-            <h1>مسابقة الأسئلة التفاعلية</h1>
-            <p>اختبار معلومات عامة مكون من 20 سؤالًا. احصل على نقاط عن كل إجابة صحيحة وستفقد نقاطًا عند الإجابة الخاطئة!</p>
-            <button id="start-btn" class="btn">ابدأ الآن <i class="fas fa-play"></i></button>
+            <h1>منصة الاختبارات التفاعلية</h1>
+            <p>اختبار معلومات عامة مع نظام نقاط تنافسي. يمكنك أيضًا إضافة أسئلة جديدة إلى بنك الأسئلة!</p>
+            <button id="start-btn" class="btn">ابدأ الاختبار <i class="fas fa-play"></i></button>
+            <button id="add-question-btn" class="btn">أضف سؤالًا جديدًا <i class="fas fa-plus"></i></button>
+            <button id="leaderboard-btn" class="btn">لوحة المتصدرين <i class="fas fa-trophy"></i></button>
         </div>
         
         <!-- شاشة الأسئلة -->
@@ -284,6 +402,47 @@
             <button id="next-btn" class="btn" style="display: none;">السؤال التالي <i class="fas fa-arrow-left"></i></button>
         </div>
         
+        <!-- شاشة إضافة سؤال -->
+        <div id="add-question-screen" class="screen">
+            <h1>إضافة سؤال جديد</h1>
+            <p>شارك بأسئلتك وقم بإثراء المحتوى التعليمي للجميع</p>
+            
+            <div class="form-group">
+                <label for="new-question">السؤال:</label>
+                <textarea id="new-question" class="form-control" rows="3" placeholder="أدخل نص السؤال هنا"></textarea>
+            </div>
+            
+            <h3>خيارات الإجابة:</h3>
+            <div id="options-list">
+                <!-- سيتم إضافة حقول الخيارات هنا -->
+            </div>
+            
+            <button id="add-option-btn" class="btn btn-sm add-option-btn">إضافة خيار <i class="fas fa-plus"></i></button>
+            
+            <div class="form-group">
+                <label for="correct-answer">الإجابة الصحيحة:</label>
+                <select id="correct-answer" class="correct-answer-select">
+                    <option value="">اختر الإجابة الصحيحة</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="question-category">التصنيف:</label>
+                <select id="question-category" class="form-control">
+                    <option value="عام">عام</option>
+                    <option value="علوم">علوم</option>
+                    <option value="تاريخ">تاريخ</option>
+                    <option value="جغرافيا">جغرافيا</option>
+                    <option value="ثقافة">ثقافة عامة</option>
+                    <option value="رياضيات">رياضيات</option>
+                    <option value="تكنولوجيا">تكنولوجيا</option>
+                </select>
+            </div>
+            
+            <button id="submit-question-btn" class="btn">إضافة السؤال <i class="fas fa-check"></i></button>
+            <button id="back-to-start-from-add" class="btn">العودة للرئيسية <i class="fas fa-home"></i></button>
+        </div>
+        
         <!-- شاشة النتائج -->
         <div id="result-screen" class="screen">
             <div class="logo">
@@ -292,7 +451,34 @@
             <h1>تهانينا! لقد أكملت الاختبار</h1>
             <div class="final-score">نقاطك: <span id="final-score">0</span></div>
             <p id="result-message">أداء رائع! لديك معرفة واسعة.</p>
+            
+            <h3>شاركنا اقتراحك لسؤال جديد:</h3>
+            <button id="suggest-question-btn" class="btn">اقترح سؤالًا <i class="fas fa-lightbulb"></i></button>
+            
             <button id="restart-btn" class="btn">اللعب مرة أخرى <i class="fas fa-redo"></i></button>
+            <button id="back-to-start" class="btn">العودة للرئيسية <i class="fas fa-home"></i></button>
+        </div>
+        
+        <!-- شاشة لوحة المتصدرين -->
+        <div id="leaderboard-screen" class="screen">
+            <h1>لوحة المتصدرين</h1>
+            <p>أفضل اللاعبين في منصة الاختبارات التفاعلية</p>
+            
+            <table class="leaderboard">
+                <thead>
+                    <tr>
+                        <th>المركز</th>
+                        <th>اسم اللاعب</th>
+                        <th>النقاط</th>
+                        <th>التاريخ</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboard-body">
+                    <!-- سيتم ملء البيانات ديناميكيًا -->
+                </tbody>
+            </table>
+            
+            <button id="back-from-leaderboard" class="btn">العودة للرئيسية <i class="fas fa-home"></i></button>
         </div>
     </div>
     
@@ -301,116 +487,67 @@
 
     <script>
         // الأسئلة والمعلومات
-        const questions = [
+        let questions = [
             {
                 question: "ما هو أصغر كوكب في النظام الشمسي؟",
                 options: ["عطارد", "الزهرة", "المريخ", "الأرض"],
-                answer: 0
+                answer: 0,
+                category: "علوم"
             },
             {
                 question: "ما هي عاصمة أستراليا؟",
                 options: ["سيدني", "ملبورن", "كانبرا", "بريزبان"],
-                answer: 2
+                answer: 2,
+                category: "جغرافيا"
             },
             {
                 question: "كم عدد عناصر الجدول الدوري القياسي؟",
                 options: ["108", "118", "128", "138"],
-                answer: 1
+                answer: 1,
+                category: "علوم"
             },
             {
                 question: "ما هو أطول نهر في العالم؟",
                 options: ["نهر النيل", "نهر الأمازون", "نهر المسيسيبي", "نهر اليانغتسي"],
-                answer: 1
+                answer: 1,
+                category: "جغرافيا"
             },
             {
                 question: "في أي عام بدأت الحرب العالمية الأولى؟",
                 options: ["1914", "1916", "1918", "1939"],
-                answer: 0
-            },
-            {
-                question: "ما هو العنصر الكيميائي الذي رمزه 'Au'؟",
-                options: ["فضة", "حديد", "ذهب", "نحاس"],
-                answer: 2
-            },
-            {
-                question: "ما هو أسرع حيوان بري؟",
-                options: ["الفهد", "الأسد", "النمر", "الظبي"],
-                answer: 0
-            },
-            {
-                question: "ما هو أعمق محيط في العالم؟",
-                options: ["المحيط الأطلسي", "المحيط الهندي", "المحيط الهادئ", "المحيط المتجمد الشمالي"],
-                answer: 2
-            },
-            {
-                question: "من رسم لوحة 'ليلة مرصعة بالنجوم'؟",
-                options: ["بابلو بيكاسو", "فينسنت فان غوخ", "ليوناردو دا فينشي", "كلود مونيه"],
-                answer: 1
-            },
-            {
-                question: "ما هو أكبر محيط في العالم؟",
-                options: ["المحيط الأطلسي", "المحيط الهندي", "المحيط الهادئ", "المحيط المتجمد الجنوبي"],
-                answer: 2
-            },
-            {
-                question: "ما هو المعدن السائل في درجة حرارة الغرفة؟",
-                options: ["الزئبق", "الرصاص", "النحاس", "القصدير"],
-                answer: 0
-            },
-            {
-                question: "ما هي أصغر قارة في العالم؟",
-                options: ["أوروبا", "أفريقيا", "أستراليا", "أنتاركتيكا"],
-                answer: 2
-            },
-            {
-                question: "من هو مؤلف كتاب 'الأمير'؟",
-                options: ["نيكولو مكيافيلي", "أفلاطون", "أرسطو", "توماس هوبز"],
-                answer: 0
-            },
-            {
-                question: "ما هو أطول جبل في العالم؟",
-                options: ["كيلimanjaro", "إفرست", "K2", "ماترهورن"],
-                answer: 1
-            },
-            {
-                question: "ما هو الغاز الأكثر وفرة في الغلاف الجوي للأرض؟",
-                options: ["الأكسجين", "الهيدروجين", "ثاني أكسيد الكربون", "النيتروجين"],
-                answer: 3
-            },
-            {
-                question: "من اكتشف الجاذبية؟",
-                options: ["ألبرت أينشتاين", "إسحاق نيوتن", "غاليليو غاليلي", "نيكولا تسلا"],
-                answer: 1
-            },
-            {
-                question: "ما هي اللغة الأكثر تحدثًا في العالم؟",
-                options: ["الإنجليزية", "الإسبانية", "المندرين", "الهندية"],
-                answer: 2
-            },
-            {
-                question: "كم عدد الأضلاع في جسم الإنسان؟",
-                options: ["12 زوجًا", "10 أزواج", "14 زوجًا", "16 زوجًا"],
-                answer: 0
-            },
-            {
-                question: "ما هو أسرع حيوان بحري؟",
-                options: ["الدلفين", "سمكة أبو سيف", "سمك التونة", "القرش"],
-                answer: 1
-            },
-            {
-                question: "ما هو أقدم خط للأنهار في العالم؟",
-                options: ["نهر النيل", "نهر الأمازون", "نهر المسيسيبي", "نهر الفرات"],
-                answer: 0
+                answer: 0,
+                category: "تاريخ"
             }
+        ];
+
+        // لوحة المتصدرين
+        let leaderboard = [
+            { name: "أحمد", score: 200, date: "2023-10-15" },
+            { name: "محمد", score: 180, date: "2023-10-14" },
+            { name: "فاطمة", score: 170, date: "2023-10-16" },
+            { name: "سارة", score: 150, date: "2023-10-13" },
+            { name: "علي", score: 130, date: "2023-10-12" }
         ];
 
         // عناصر DOM
         const startScreen = document.getElementById('start-screen');
         const questionScreen = document.getElementById('question-screen');
         const resultScreen = document.getElementById('result-screen');
+        const addQuestionScreen = document.getElementById('add-question-screen');
+        const leaderboardScreen = document.getElementById('leaderboard-screen');
+        
         const startBtn = document.getElementById('start-btn');
         const nextBtn = document.getElementById('next-btn');
         const restartBtn = document.getElementById('restart-btn');
+        const addQuestionBtn = document.getElementById('add-question-btn');
+        const leaderboardBtn = document.getElementById('leaderboard-btn');
+        const backToStart = document.getElementById('back-to-start');
+        const backFromLeaderboard = document.getElementById('back-from-leaderboard');
+        const backToStartFromAdd = document.getElementById('back-to-start-from-add');
+        const suggestQuestionBtn = document.getElementById('suggest-question-btn');
+        const addOptionBtn = document.getElementById('add-option-btn');
+        const submitQuestionBtn = document.getElementById('submit-question-btn');
+        
         const questionNumber = document.getElementById('question-number');
         const questionText = document.getElementById('question-text');
         const optionsContainer = document.getElementById('options-container');
@@ -421,16 +558,37 @@
         const resultMessageElement = document.getElementById('result-message');
         const feedbackElement = document.getElementById('feedback');
         const celebrationElement = document.getElementById('celebration');
+        const optionsList = document.getElementById('options-list');
+        const correctAnswerSelect = document.getElementById('correct-answer');
+        const leaderboardBody = document.getElementById('leaderboard-body');
 
         // متغيرات اللعبة
         let currentQuestionIndex = 0;
         let score = 0;
         let answered = false;
 
-        // بدء اللعبة
+        // تهيئة الصفحة
+        window.onload = function() {
+            // إعداد خيارات افتراضية عند إضافة سؤال
+            addOptionField();
+            addOptionField();
+            
+            // تحميل لوحة المتصدرين
+            loadLeaderboard();
+        };
+
+        // أحداث الأزرار
         startBtn.addEventListener('click', startGame);
         nextBtn.addEventListener('click', nextQuestion);
         restartBtn.addEventListener('click', restartGame);
+        addQuestionBtn.addEventListener('click', showAddQuestionScreen);
+        leaderboardBtn.addEventListener('click', showLeaderboard);
+        backToStart.addEventListener('click', backToStartScreen);
+        backFromLeaderboard.addEventListener('click', backToStartScreen);
+        backToStartFromAdd.addEventListener('click', backToStartScreen);
+        suggestQuestionBtn.addEventListener('click', showAddQuestionScreen);
+        addOptionBtn.addEventListener('click', addOptionField);
+        submitQuestionBtn.addEventListener('click', submitNewQuestion);
 
         function startGame() {
             startScreen.style.display = 'none';
@@ -444,6 +602,11 @@
             answered = false;
             nextBtn.style.display = 'none';
             feedbackElement.textContent = '';
+            
+            // إذا لم يعد هناك أسئلة، أضف المزيد تلقائياً
+            if (currentQuestionIndex >= questions.length) {
+                addSampleQuestions();
+            }
             
             const question = questions[currentQuestionIndex];
             questionNumber.textContent = `السؤال ${currentQuestionIndex + 1} من ${questions.length}`;
@@ -518,12 +681,199 @@
                 resultMessageElement.textContent = 'ربما تحتاج إلى دراسة أكثر!';
             }
             
+            // إضافة النتيجة إلى لوحة المتصدرين إذا كانت عالية
+            if (score > 50) {
+                const today = new Date();
+                const dateString = today.toISOString().split('T')[0];
+                leaderboard.push({ name: "لاعب", score: score, date: dateString });
+                leaderboard.sort((a, b) => b.score - a.score);
+                // الاحتفاظ بأفضل 10 نتائج فقط
+                leaderboard = leaderboard.slice(0, 10);
+                localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
+            }
+            
             createConfetti();
         }
 
         function restartGame() {
             resultScreen.style.display = 'none';
+            startGame();
+        }
+        
+        function backToStartScreen() {
+            questionScreen.style.display = 'none';
+            resultScreen.style.display = 'none';
+            addQuestionScreen.style.display = 'none';
+            leaderboardScreen.style.display = 'none';
             startScreen.style.display = 'flex';
+        }
+        
+        function showAddQuestionScreen() {
+            startScreen.style.display = 'none';
+            resultScreen.style.display = 'none';
+            addQuestionScreen.style.display = 'block';
+            
+            // مسح الحقول عند فتح الشاشة
+            document.getElementById('new-question').value = '';
+            optionsList.innerHTML = '';
+            correctAnswerSelect.innerHTML = '<option value="">اختر الإجابة الصحيحة</option>';
+            
+            // إضافة حقلين افتراضيين
+            addOptionField();
+            addOptionField();
+        }
+        
+        function showLeaderboard() {
+            startScreen.style.display = 'none';
+            leaderboardScreen.style.display = 'block';
+            loadLeaderboard();
+        }
+        
+        function loadLeaderboard() {
+            // محاولة تحميل البيانات من localStorage إذا وجدت
+            const savedLeaderboard = localStorage.getItem('leaderboard');
+            if (savedLeaderboard) {
+                leaderboard = JSON.parse(savedLeaderboard);
+            }
+            
+            leaderboardBody.innerHTML = '';
+            leaderboard.sort((a, b) => b.score - a.score).forEach((player, index) => {
+                const row = document.createElement('tr');
+                
+                let rankBadge = '';
+                if (index === 0) rankBadge = '<span class="badge">الأول</span>';
+                else if (index === 1) rankBadge = '<span class="badge">الثاني</span>';
+                else if (index === 2) rankBadge = '<span class="badge">الثالث</span>';
+                
+                row.innerHTML = `
+                    <td>${index + 1} ${rankBadge}</td>
+                    <td>${player.name}</td>
+                    <td>${player.score}</td>
+                    <td>${player.date}</td>
+                `;
+                
+                leaderboardBody.appendChild(row);
+            });
+        }
+        
+        function addOptionField() {
+            const optionId = Date.now(); // استخدام الطوابع الزمنية لإنشاء معرّفات فريدة
+            const optionGroup = document.createElement('div');
+            optionGroup.classList.add('option-input-group');
+            optionGroup.innerHTML = `
+                <input type="text" class="form-control option-input" placeholder="أدخل نص الخيار">
+                <span class="remove-option" onclick="removeOptionField(this)"><i class="fas fa-times"></i></span>
+            `;
+            optionsList.appendChild(optionGroup);
+            
+            // إضافة الخيار إلى قائمة الإجابات الصحيحة
+            const optionItem = document.createElement('option');
+            optionItem.value = optionId;
+            optionItem.textContent = `خيار ${correctAnswerSelect.options.length}`;
+            correctAnswerSelect.appendChild(optionItem);
+        }
+        
+        function removeOptionField(element) {
+            if (optionsList.children.length <= 2) {
+                alert('يجب أن يحتوي السؤال على خيارين على الأقل!');
+                return;
+            }
+            
+            const optionGroup = element.parentElement;
+            const optionInput = optionGroup.querySelector('.option-input');
+            const optionIndex = Array.from(optionsList.children).indexOf(optionGroup);
+            
+            // إزالة الخيار من قائمة الإجابات الصحيحة
+            const options = correctAnswerSelect.querySelectorAll('option');
+            if (options.length > optionIndex + 1) { // +1 because of the default option
+                correctAnswerSelect.removeChild(options[optionIndex + 1]);
+            }
+            
+            optionsList.removeChild(optionGroup);
+            
+            // تحديث نصوص الخيارات المتبقية
+            updateOptionLabels();
+        }
+        
+        function updateOptionLabels() {
+            const options = correctAnswerSelect.querySelectorAll('option');
+            for (let i = 1; i < options.length; i++) {
+                options[i].textContent = `خيار ${i}`;
+            }
+        }
+        
+        function submitNewQuestion() {
+            const questionText = document.getElementById('new-question').value.trim();
+            const category = document.getElementById('question-category').value;
+            const correctAnswerIndex = correctAnswerSelect.selectedIndex - 1; // -1 because of the default option
+            
+            // التحقق من صحة البيانات
+            if (!questionText) {
+                alert('يرجى إدخال نص السؤال!');
+                return;
+            }
+            
+            const optionInputs = optionsList.querySelectorAll('.option-input');
+            const options = [];
+            
+            for (let input of optionInputs) {
+                const optionText = input.value.trim();
+                if (!optionText) {
+                    alert('يرجى ملء جميع الخيارات!');
+                    return;
+                }
+                options.push(optionText);
+            }
+            
+            if (correctAnswerIndex < 0 || correctAnswerIndex >= options.length) {
+                alert('يرجى اختيار الإجابة الصحيحة!');
+                return;
+            }
+            
+            if (options.length < 2) {
+                alert('يجب أن يحتوي السؤال على خيارين على الأقل!');
+                return;
+            }
+            
+            // إضافة السؤال إلى القائمة
+            questions.push({
+                question: questionText,
+                options: options,
+                answer: correctAnswerIndex,
+                category: category
+            });
+            
+            // حفظ الأسئلة في localStorage
+            localStorage.setItem('quizQuestions', JSON.stringify(questions));
+            
+            alert('تم إضافة السؤال بنجاح! شكراً لمشاركتك.');
+            backToStartScreen();
+        }
+        
+        function addSampleQuestions() {
+            // إضافة المزيد من الأسئلة تلقائياً إذا لزم الأمر
+            const moreQuestions = [
+                {
+                    question: "ما هو العنصر الكيميائي الذي رمزه 'Au'؟",
+                    options: ["فضة", "حديد", "ذهب", "نحاس"],
+                    answer: 2,
+                    category: "علوم"
+                },
+                {
+                    question: "ما هو أسرع حيوان بري؟",
+                    options: ["الفهد", "الأسد", "النمر", "الظبي"],
+                    answer: 0,
+                    category: "علوم"
+                },
+                {
+                    question: "ما هو أعمق محيط في العالم؟",
+                    options: ["المحيط الأطلسي", "المحيط الهندي", "المحيط الهادئ", "المحيط المتجمد الشمالي"],
+                    answer: 2,
+                    category: "جغرافيا"
+                }
+            ];
+            
+            questions = questions.concat(moreQuestions);
         }
 
         // تأثيرات الاحتفال
@@ -562,6 +912,9 @@
                 celebrationElement.style.display = 'none';
             }, 5000);
         }
+        
+        // جعل الدوال متاحة عالمياً لاستخدامها في الأحداث
+        window.removeOptionField = removeOptionField;
     </script>
 </body>
 </html>
