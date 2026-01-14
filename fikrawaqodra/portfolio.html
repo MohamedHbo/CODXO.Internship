@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معرض الأعمال - فِكْرَةٌ وَقُدْرَةٌ</title>
+    <link rel="stylesheet" href="portfolio.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body class="light-mode">
+    <!-- شريط التنقل الفاتح -->
+    <nav class="light-nav">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-lightbulb"></i>
+              <span> فِكْرَةٌ  </span>
+                <span style="color: black">  وَقُدْرَةٌ </span>
+            </a>
+            
+            <div class="nav-container">
+                <ul class="nav-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                    <li><a href="portfolio.html" class="active"><i class="fas fa-briefcase"></i> معرض الأعمال</a></li>
+                    <li><a href="about.html"><i class="fas fa-info-circle"></i> من نحن</a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
+                </ul>
+            </div>
+            
+            <button class="menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- هيدر الصفحة -->
+    <header class="portfolio-header">
+        <div class="container">
+            <div class="header-content">
+                <h1><i class="fas fa-photo-video"></i> معرض أعمالنا</h1>
+                <p>إبداعاتنا وتصاميمنا التي نفخر بها</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- قسم التصنيفات -->
+    <section class="categories-section">
+        <div class="container">
+            <div class="category-filters">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-th-large"></i> الكل
+                </button>
+                <button class="filter-btn" data-filter="web">
+                    <i class="fas fa-laptop-code"></i> مواقع ويب
+                </button>
+                <button class="filter-btn" data-filter="design">
+                    <i class="fas fa-paint-brush"></i> تصميم جرافيك
+                </button>
+                <button class="filter-btn" data-filter="elearning">
+                    <i class="fas fa-graduation-cap"></i> تعليم إلكتروني
+                </button>
+                <button class="filter-btn" data-filter="content">
+                    <i class="fas fa-pen-fancy"></i> كتابة محتوى
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- معرض الأعمال -->
+    <section class="portfolio-gallery">
+        <div class="container">
+            <div class="gallery-grid">
+                <!-- مشروع 1 -->
+                <div class="portfolio-card web" data-category="web">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3>موقع شركة تقنية</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="project-features">
+                            <li><i class="fas fa-check-circle"></i> تصميم عصري</li>
+                            <li><i class="fas fa-check-circle"></i> متجاوب مع جميع الأجهزة</li>
+                            <li><i class="fas fa-check-circle"></i> نظام إدارة محتوى</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <span class="project-date"><i class="fas fa-calendar-alt"></i> يناير 2024</span>
+                        <a href="#" class="view-btn">
+                            <i class="fas fa-eye"></i> عرض المشروع
+                        </a>
+                    </div>
+                </div>
+
+                <!-- مشروع 2 -->
+                <div class="portfolio-card design" data-category="design">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <h3>هوية بصرية لمطعم</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="project-features">
+                            <li><i class="fas fa-check-circle"></i> تصميم شعار احترافي</li>
+                            <li><i class="fas fa-check-circle"></i> دليل هوية بصرية</li>
+                            <li><i class="fas fa-check-circle"></i> تصاميم سوشيال ميديا</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <span class="project-date"><i class="fas fa-calendar-alt"></i> فبراير 2024</span>
+                        <a href="#" class="view-btn">
+                            <i class="fas fa-eye"></i> عرض المشروع
+                        </a>
+                    </div>
+                </div>
+
+                <!-- مشروع 3 -->
+                <div class="portfolio-card elearning" data-category="elearning">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3>منصة تعليم إلكتروني</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="project-features">
+                            <li><i class="fas fa-check-circle"></i> واجهة مستخدم سهلة</li>
+                            <li><i class="fas fa-check-circle"></i> نظام متابعة الطلاب</li>
+                            <li><i class="fas fa-check-circle"></i> تقييم ومتابعة</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <span class="project-date"><i class="fas fa-calendar-alt"></i> مارس 2024</span>
+                        <a href="#" class="view-btn">
+                            <i class="fas fa-eye"></i> عرض المشروع
+                        </a>
+                    </div>
+                </div>
+
+                <!-- مشروع 4 -->
+                <div class="portfolio-card content" data-category="content">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-pen-fancy"></i>
+                        </div>
+                        <h3>إستراتيجية محتوى</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="project-features">
+                            <li><i class="fas fa-check-circle"></i> خطة محتوى 6 أشهر</li>
+                            <li><i class="fas fa-check-circle"></i> كتابة 50 مقال احترافي</li>
+                            <li><i class="fas fa-check-circle"></i> تحسين محركات البحث</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <span class="project-date"><i class="fas fa-calendar-alt"></i> أبريل 2024</span>
+                        <a href="#" class="view-btn">
+                            <i class="fas fa-eye"></i> عرض المشروع
+                        </a>
+                    </div>
+                </div>
+
+                <!-- مشروع 5 -->
+                <div class="portfolio-card web" data-category="web">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <h3>متجر إلكتروني</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="project-features">
+                            <li><i class="fas fa-check-circle"></i> تصميم جذاب</li>
+                            <li><i class="fas fa-check-circle"></i> نظام دفع آمن</li>
+                            <li><i class="fas fa-check-circle"></i> إدارة طلبات</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <span class="project-date"><i class="fas fa-calendar-alt"></i> مايو 2024</span>
+                        <a href="#" class="view-btn">
+                            <i class="fas fa-eye"></i> عرض المشروع
+                        </a>
+                    </div>
+                </div>
+
+                <!-- مشروع 6 -->
+                <div class="portfolio-card design" data-category="design">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-photo-video"></i>
+                        </div>
+                        <h3>حملة إعلانية</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="project-features">
+                            <li><i class="fas fa-check-circle"></i> 20 تصميم إعلاني</li>
+                            <li><i class="fas fa-check-circle"></i> 5 فيديوهات دعائية</li>
+                            <li><i class="fas fa-check-circle"></i> إستراتيجية تسويقية</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <span class="project-date"><i class="fas fa-calendar-alt"></i> يونيو 2024</span>
+                        <a href="#" class="view-btn">
+                            <i class="fas fa-eye"></i> عرض المشروع
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الإحصائيات -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3 class="counter" data-count="150">0</h3>
+                    <p>مشروع مكتمل</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="counter" data-count="85">0</h3>
+                    <p>عميل راضٍ</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3 class="counter" data-count="12">0</h3>
+                    <p>جائزة وتكريم</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="counter" data-count="5000">0</h3>
+                    <p>ساعة عمل</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الدعوة للعمل -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2><i class="fas fa-paper-plane"></i> لديك مشروع في ذهنك؟</h2>
+                <p>نحن هنا لتحويل أفكارك إلى واقع ملموس باحترافية وجودة عالية</p>
+                <a href="contact.html" class="cta-btn">
+                    <i class="fas fa-envelope"></i> تواصل معنا الآن
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- الفوتر الفاتح -->
+    <footer class="light-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>فِكْرَةٌ وَقُدْرَةٌ</h3>
+                    <p>نقدم حلولاً تعليمية وتقنية مبتكرة تلبي احتياجات العصر الرقمي بجودة عالية واحترافية.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61577639049063"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/mobtakir_academy/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="portfolio.html">معرض الأعمال</a></li>
+                        <li><a href="about.html">من نحن</a></li>
+                        <li><a href="contact.html">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>خدماتنا</h3>
+                    <ul>
+                        <li><a href="#">تصميم المواقع</a></li>
+                        <li><a href="#">التصميم الجرافيكي</a></li>
+                        <li><a href="#">التعليم الإلكتروني</a></li>
+                        <li><a href="#">كتابة المحتوى</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>اتصل بنا</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> العنوان: القاهرة، مصر</li>
+                             <li><i class="fas fa-phone"></i> الهاتف: +20 1050302032</li>
+                        <li><i class="fas fa-phone"></i> الهاتف: +967 781301122</li>
+                        <li><i class="fas fa-envelope"></i> الإيميل: academy@fikrawaqodra.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 فِكْرَةٌ وَقُدْرَةٌ. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/portfolio-light.js"></script>
+</body>
+</html>
